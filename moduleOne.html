@@ -1,0 +1,2211 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>module__1</title>
+    <link rel="stylesheet" href="./CSS/style.css" />
+  </head>
+  <body>
+    <section class="container">
+      <h3 class="title">Web приложения</h3>
+      <p>
+        В современной web разработке изменились не только техники, позволяющие
+        web выглядеть лучше, загружаться быстрее и быть более удобными в
+        использовании. Прежде всего изменились фундаментальные вещи - то как мы
+        проэктируем и создаем web приложения. <br />
+        Возьмем случайный web сайт, например с коллекцией рецептов, расписание
+        тренировок и т.д. Всегда есть набор страниц: домашняя, профиль, страница
+        коллекции и страница одного элемента коллекции.
+      </p>
+      <img src="./images/1.jpg" alt="" />
+      <h3 class="title">Многостраничное приложение</h3>
+      <p>
+        Ранее использовали подход, который включает использовании несколько веб
+        страниц
+      </p>
+      <img src="./images/2.jpg" alt="" />
+      <ul>
+        <li>Архитектура клиент - сервер</li>
+        <li>Вся логика живет на сервере</li>
+        <li>На каждый запрос сервер посылает готовый HTML документ</li>
+        <li>Перезагрузка страницы при каждом запросе</li>
+        <li>Плохая интерактивность</li>
+      </ul>
+      <h3 class="title">Одностраничное приложение</h3>
+      <img src="./images/3.jpg" alt="" />
+      <p>
+        Современный подход - сайт, на котором пользователь никогда не переходит
+        на другие HTML страницы. Интерфейс вместо запроса HTML документов
+        сервера перерисовывается на клиенте, на одной и той же странице без
+        перезагрузки
+      </p>
+      <ul>
+        <li>Архитектура клиент - сервер</li>
+        <li>
+          При за грузке сайта сервер всегда отдает стартовую HTML страницу -
+          index.htlm
+        </li>
+        <li>
+          Каждый последующий запрос на сервер получает только данные в формате
+          json
+        </li>
+        <li>Обновление интерфейса просиходит динамически на клиенте</li>
+        <li>Загрузка первой страницы может быть довольно медленной</li>
+        <li>Логика не связаная с безопасностью живет на клиенте</li>
+        <li>Слабое SEO</li>
+        <li>
+          Сложность кода и его поддержка масштабируется количеством функционала
+          приложения
+        </li>
+      </ul>
+      <h3 class="title">Библиотека React</h3>
+      <p>
+        React это библиотека для создания элементов пользовательского
+        интерфейса. В react нет встроенной маршрутизации, http модуля и т.д.
+        Однако есть богатая экосистема, которая позволяет решать любую задачу.
+        <br />
+        При создании приложения с использованием react разработчик не
+        взаимодействует с dom-деревом напрямую. Его задача описать интерфейс с
+        помощью компонентов и управлять измененными данными. React при изменении
+        данных сам обновляет интерфейс по шаблону. <br />
+        React - мультиплатформенный, разметку можно рендерить на сервере
+        (next.js), писать нативные приложения (react native) или десктопные
+        приложения (electron)
+      </p>
+      <h3 class="title">DOM браузера и виртуальрный DOM</h3>
+      <p>
+        <b>Браузер DOM</b> - древовидное представление HTML документа,
+        представлен в виде DOM узла, сохраняется в браузере и напрямую связан с
+        тем что мы видим на странице. <br />
+        C каждым изменением DOM браузер выполняет несколько трудоемких задач.
+        Частые операции обновления такого дерева оказывают негативные влияния на
+        производительность и реакцию интерфейса. Поэтому он медленный и
+        обновлять его необходимо эффектвно.
+      </p>
+      <img src="./images/4.jpg" alt="" />
+      <p>
+        <b>Virtual DOM</b> - абстракция легковесная копия реального DOM дерева в
+        виде json документа
+      </p>
+      <ul>
+        <li>Существует только в памяти и не рендерится в браузере</li>
+        <li>Не зависит от внутренней имплементации браузера</li>
+        <li>Использует лучшие практики обновления DOM</li>
+        <li>Собирает обновления в группы для оптимизации ренда(батчинг)</li>
+      </ul>
+      <p>
+        <b>Алгаритм обновления DOM</b><br />
+        В react каждый элемент интерфейса это компонент (кастомный или
+        встроенный), который зависит от проксов или состояния и представлен
+        узлами виртуального DOM дерева. Взамодействие пользователя с интерфейсом
+        изменяет состояние интерфейса.
+      </p>
+      <img src="./images/5.jpg" alt="" />
+      <p>
+        При измении компонента создается новое виртуальное DOM дерево. Далее
+        используется название алгоритма breadth-first, происходит серверное
+        сравнение (диференцировка, diffing) двух виртуальных деревьев до и после
+        обновления
+      </p>
+      <img src="./images/6.jpg" alt="" />
+      <p>
+        Красные узлы представляют собой изменившиеся элементы. Вычисляется
+        разница между предидущей и новой версией DOM дерева. Применяется
+        оптимальный вариант внесения изменения в реальный DOM. Это гарантирует
+        что в реальном DOM дереве производится минимальное кол-во обновлений тем
+        самым повышая производительность интерфейса.
+      </p>
+      <img src="./images/7.jpg" alt="" />
+      <h3 class="title">Инструменты</h3>
+      <p>
+        Для создания react приложения необходимы node.js, webpack, babel, react,
+        dev tools. Можно разработать свою web pack сборку либо взять готовую с
+        github. <br />
+        <b>Создание приложения react</b><br />
+        Для обучения маленьких и средних проэктов рекомендуетмся использовать
+        утилиту react
+      </p>
+      <ul>
+        <li>
+          Абстрагирует всю конфигурацию позволяя сосредоточится на написании
+          кода
+        </li>
+        <li>Включает необходимые интрументы (webpack, babel, eslint)</li>
+        <li>Расширяется доп пакетами из экосистемы react</li>
+        <li>
+          Имеет функцию удаления, которая удаляет абстракцию и открывает
+          кофигурацию
+        </li>
+      </ul>
+      <p>
+        <b>npx</b> - инструмент, предназначеный для того чтобы помочь
+        стандартизировать использование npm пакетов. Поставляется из npm версии
+        5.2.0 и выше. Npm упрощает установку и управление зависимостями,
+        размещенными в реестре, а npx упрощает использование сli утилит и других
+        выполняемых файлов без необходимости их установки в систему или проэкт.
+      </p>
+      <h3 class="title">JSX</h3>
+      <p class="information">
+        const link = &lt;a href = &quot;&lt;https://reactjs.net/&gt; &quot;
+        &gt;Сайт React&lt;/a&gt; ;
+      </p>
+      <p>
+        Это не строчка и не HTML, это XML образный синтаксис, называется
+        JSX(java script sintaxis extension), расширение синтаксиса JS с помощью
+        которого удобно расписывать разметку, того что мы хотим увидеть на
+        экране
+      </p>
+      <ul>
+        <li>Позволяет использовать XML образный синтаксис прямо в JS</li>
+        <li>Упрощает код, делает его декларативным и читабельным</li>
+        <li>Описывает объекты - элементы virtual DOM</li>
+        <li>Это не HTML, babel трансформирует JSX в вызовы функций</li>
+        <li>В JSX можно использовать все возможности JS</li>
+      </ul>
+      <p class="information">
+        <b>React элементы</b><br />
+        JSX создает элементы - самые маленькие строительные блоки - react.
+        лементы virtual DOM - это обычные JS объекты, поэтому создаются очень
+        быстро.
+      </p>
+      <p>Используя JSX разметка становится похожей на привычный HTML шаблон</p>
+      <p class="information">
+        const imgUrl = <br />
+        'https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg?dpr=2&amp;h=480&amp;w=640';<br />
+        const productPrice = 30;<br /><br />
+
+        const product = (<br />
+        &lt;div&gt;<br />
+        &lt;img src={imgUrl} alt=&quot;taco with lime&quot;
+        width=&quot;640&quot; /&gt;<br />
+        &lt;h2&gt;Price: {productPrice}$&lt;/h2&gt;<br />
+        &lt;button type=&quot;button&quot;&gt;Add&lt;/button&gt;<br />
+        &lt;/div&gt;<br />
+        );<br />
+      </p>
+      <ul>
+        <li>
+          Внутри JSX можно использовать любое валидное выражение, обертывая его
+          в фигурные скобки
+        </li>
+        <li>
+          Значение атрибутов указывается в двойных кавычках, если это обычная
+          строка и в фигурных скобках, если значение вычесляется или тип
+          отличается от строки
+        </li>
+        <li>Все атрибуты react элементов пишутся в camelCase нотации</li>
+        <li>
+          JSX теги могут быть родителями других JSX тегов. Если тег пуст или
+          самозакрывается его обязательно необходимо закрыть используя "/>"
+        </li>
+      </ul>
+      <p>
+        <b>Render элементов в DOM дерево</b><br />
+        Для того чтобы отрендерить элементы в DOM дерево в пакете React DOM есть
+        методы <b>createRoot(container)</b> и <b>render(element)</b>, которые
+        работаю вместе <br />
+        Первый принимает ссылку на существующий DOM элемент, например div#root и
+        index.html создает корень, в который будет рендерится вся программа.
+        Второй ждет ссылки на react элемент или компонент.
+      </p>
+      <p class="information">
+        import ReactDOM from "react-dom/client"; <br /><br />
+        const imgUrl = <br />
+        'https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg?dpr=2&amp;h=480&amp;w=640';<br />
+        const productPrice = 30;<br /><br />
+
+        const product = (<br />
+        &lt;div&gt;<br />
+        &lt;img src={imgUrl} alt=&quot;taco with lime&quot;
+        width=&quot;640&quot; /&gt;<br />
+        &lt;h2&gt;Price: {productPrice}$&lt;/h2&gt;<br />
+        &lt;button type=&quot;button&quot;&gt;Add&lt;/button&gt;<br />
+        &lt;/div&gt;<br />
+        );<br /><br />
+        ReactDOM.createRoot(document.getElementById("root")).render(product);
+      </p>
+      <p class="information">
+        <b>Один рендер на программу</b><br />
+        React использует модель отношений предок-потомок, поэтому достаточно
+        использовать только один вызов render() в программе. Рендер высочайшего
+        элемента в иерархии повлечет за собой рендер всего поддерева
+      </p>
+      <p>
+        <b>Правило общего отца</b> <br />
+        Первая часть выражения присваивания должна возвращать одно значение.
+      </p>
+      <p class="information">
+        const post = ( <br />
+        &lt;h2&gt;Заголовок сообщения&lt;/h2&gt;,<br />
+        &lt;p&gt;Текст сообщения&lt;/p&gt;<br />
+        );<br />
+      </p>
+      <p>
+        Выражение это одно значение, результат некоторых вычислений, отсюда
+        вытекает правило общего отца
+      </p>
+      <p class="information">
+        const post = ( <br />
+        &lt;div&gt;<br />
+        &lt;h2&gt;Заголовок сообщения&lt;/h2&gt;<br />
+        &lt;p&gt;Текст сообщения&lt;/p&gt;<br />
+        &lt;/div&gt;<br />
+        );
+      </p>
+      <p>
+        Если в разметке лишний тег - обертка не нужен используются фрагменты,
+        похожие на DocumentFragment. Это встроенный компонент, при рендере
+        подставляет свое содержимое.
+      </p>
+      <p class="information">
+        import { Fragment } from &quot;react&quot;; <br />
+        const post1 = (<br />
+        &lt;Fragment&gt;<br />
+        &lt;h2&gt;Заголовок сообщения&lt;/h2&gt;<br />
+        &lt;p&gt;Текст сообщения&lt;/p&gt;<br />
+        &lt;/Fragment&gt;<br />
+        );<br />
+      </p>
+      <p>
+        Синтаксис фрагментов можно сократить и не добавлять import Fragment.
+        Babel сделает все необходимые трансформации, заменив все пустые JSX теги
+        на <b>React.Fragment</b>
+      </p>
+      <p class="information">
+        const post1 = (<br />
+        &lt;&gt;<br />
+        &lt;h2&gt;Заголовок сообщения&lt;/h2&gt;<br />
+        &lt;p&gt;Текст сообщения&lt;/p&gt;<br />
+        &lt;/&gt;<br />
+        );<br />
+      </p>
+      <h3 class="title">Компоненты</h3>
+      <p>
+        <b>Компоненты</b> - основные строительные блоки react приложений
+        посредством которых интерфейс разделяется на независимые части <br />
+        Разработчик создает небольшие компоненты, которые можно совмещать, чтобы
+        сформировыввать большие или использовать их как самостоятельные элементы
+        интерфейса. Самое главное в этой концепции, что и большие и маленькие
+        компоненты можно использовать повторно в текущем и в новом проэкте.
+      </p>
+      <img src="./images/8.jpg" alt="" />
+      <p>
+        React приложения можно представить как древо компонентов. На верхнем
+        уровне стоит корневой компонент, в который вложено любое кол-во других
+        компонентов. Каждый компонент должен вернуть JSX разметку тем самым
+        указывая какой HTML мы хотим отрендерить в DOM <br />
+        <b>Компоненты функций</b><br />
+        В самой простой форме компонент - JS функция: функция получает объект
+        свойств, который называется props и возвращает дерево react элементов
+      </p>
+      <img src="./images/9.jpg" alt="" />
+      <p class="information">
+        Имя компонента обязательно должно начинаться с прописной буквы. Название
+        компонентов с строчной буквы, зарезервированой для HTML элементов. Если
+        вы попытаетесь назвать компонент с маленькой буквы а не с большой react
+        проигнорирует его
+      </p>
+      <p class="information">
+        const myFunctionalComponet = props =&gt; &lt;div&gt;Functional
+        Component&lt;/div&gt;;
+      </p>
+      <ul>
+        Компоненты функций составляют большую часть react приложений
+        <li>Легче воспринимать</li>
+        <li>Легче тестировать</li>
+        <li>Нет контекста this</li>
+      </ul>
+      <p>
+        const Product = props =&gt; ( <br />
+        &lt;div&gt;<br />
+        &lt;img src={imgUrl} alt=&quot;taco with lime&quot;
+        width=&quot;640&quot; /&gt;<br />
+        &lt;h2&gt;Price: {productPrice}$&lt;/h2&gt;<br />
+        &lt;button type=&quot;button&quot;&gt;Add&lt;/button&gt;<br />
+        &lt;/div&gt;<br />
+        );<br /><br />
+
+        ReactDOM.createRoot(document.getElementById(&quot;root&quot;)).render(&lt;Product/&gt;)
+      </p>
+      <p>
+        <b>Свойства компонента (props)</b><br />
+        Свойства (props) одна из основных концепций react. Компоненты принимают
+        произвольные свойства и возвращают react элементы, описывающие что нужно
+        отрендерить в DOM.
+      </p>
+      <ul>
+        <li>props используются для передачи данных от родителя к ребенку</li>
+        <li>props передаются только вниз по древу от родителя компонента</li>
+        <li>При изменении props react рендерит компонент и обновляет DOM</li>
+        <li>props доступны только для чтения, их нельзя изменить</li>
+      </ul>
+      <img src="./images/10.jpg" alt="" />
+      <p>
+        props может являться текстом кнопки, изображением, ссылкой, любыми
+        данными для компонента. props могут быть строчками или результатами JS
+        выражений. Если передано только имя props - это буль, по умолчанию true
+      </p>
+      <p>
+        const App = () =&gt; ( <br />
+        &lt;&gt;<br />
+        &lt;h1&gt;Text&lt;/h1&gt;<br />
+        &lt;Product name=&quot;text product&quot;/&gt;<br />
+        &lt;/&gt;<br />
+        )
+      </p>
+      <p>
+        Компонент &lt;Product/&gt; объявляет параметр props - это будет объект,
+        содержащий все предыдущие props
+      </p>
+      <p class="information">
+        const Product1 = props =&gt; ( <br />
+        &lt;div&gt;<br />
+        &lt;p&gt;{props.name}&lt;/p&gt;<br />
+        &lt;/div&gt;<br />
+        )
+      </p>
+      <p>Добавим компонент &lt;Products/&gt;</p>
+      <p class="information">
+        const Product2 = props =&gt; ( <br />
+        &lt;div&gt;<br />
+        &lt;img src={props.imgUrl} alt={props.name} width=&quot;640&quot;
+        /&gt;<br />
+        &lt;h2&gt;{props.name}&lt;/h2&gt;<br />
+        &lt;p&gt;Price: {props.price}$&lt;/p&gt;<br />
+        &lt;button type=&quot;button&quot;&gt;Add&lt;/button&gt;<br />
+        &lt;/div&gt;<br />
+        );
+      </p>
+      <p>
+        Сразу будем использовать простой паттерн при работе с props. Поскольку
+        props это объект, мы можем деструктуризировать его в подписи функции.
+        Это сделает код более чистым и читабельным.
+      </p>
+      <p class="information">
+        const Product3 = ({ imgUrl, name, price }) =&gt; ( <br />
+        &lt;div&gt;<br />
+        &lt;img src={imgUrl} alt={name} width=&quot;640&quot; /&gt;<br />
+        &lt;h2&gt;{name}&lt;/h2&gt;<br />
+        &lt;p&gt;Price: {price}$&lt;/p&gt;<br />
+        &lt;button type=&quot;button&quot;&gt;Add&lt;/button&gt;<br />
+        &lt;/div&gt;<br />
+        ); <br /><br />
+        const App1 = () =&gt; (<br />
+        &lt;div&gt;<br />
+        &lt;h1&gt;Best product&lt;/h1&gt;<br />
+        &lt;Product3<br />
+        imgUrl=&quot;&lt;https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg?dpr=2&amp;h=480&amp;w=640&gt;<br />
+        &quot; name=&quot;Shavuha&quot; price={30.05}<br />
+        /&gt;<br />
+        &lt;/div&gt;<br />
+        );
+      </p>
+      <p>
+        В итоге мы создали настраиваимый компонент и который можно использовать
+        для отображения товара. Мы передаем ему данные как props, а в ответ
+        получаем дерево react элементов с подставленными значениями. <br />
+        <b>Значение props по умолчанию</b><br />
+        Что если компонент ожидает какое-то значение, а его не передали? - При
+        обращении к свойству объекта props получим undefind. <br />
+        Для того чтобы указать значение свойста по умолчанию используется
+        синтаксис значения по умолчанию во время диструктуризации props.
+      </p>
+      <p class="bg">
+        const Product4 = ({ <br />
+        imgUrl =
+        '&lt;https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg?dpr=2&amp;h=480&amp;w=640&gt;',<br />
+        name,<br />
+        price,<br />
+        }) =&gt; (<br />
+        &lt;div&gt;<br />
+        &lt;img src={imgUrl} alt={name} width=&quot;640&quot; /&gt;<br />
+        &lt;h2&gt;{name}&lt;/h2&gt;<br />
+        &lt;p&gt;Price: {price}$&lt;/p&gt;<br />
+        &lt;button type=&quot;button&quot;&gt;Add&lt;/button&gt;<br />
+        &lt;/div&gt;<br />
+        );<br /><br />
+
+        // Определение defaultProps гарантирует что props.imgUrl будет иметь
+        значение даже если оно не было указано при вызове компонента у
+        <br />родительского элемента<br /><br />
+
+        ReactDOM.createRoot(document.getElementById('root')).render(<br />
+        &lt;Product4 name=&quot;Shaverma&quot; price=&quot;25.50&quot; /&gt;<br />
+        );<br />
+      </p>
+      <p>
+        <b>Свойства props.children</b><br />
+        Концепция дочерних элементов позволяет очень просто производить
+        концепцию композиций компонентов. В виде детей можно передавать
+        компоненты как встроенные так и кастомные. Это очень удобно при работе с
+        сложными составными компонентами.
+      </p>
+      <ul>
+        <li>
+          Свойство children автоматически доступно в каждом компоненте. Его
+          содержимое является то, что находится между открывающим и закрывающим
+          JSX тегом
+        </li>
+        <li>В функциональных компонентах обращаемся как к props.children</li>
+        <li>Значение props.children практически все что угодно</li>
+        <li>
+          К примеру у нас есть компонент профиля &lt;Profile/&gt; и
+          оформительный компонент &lt;Panel/&gt;, в котором мы можем помещать
+          произвольный контент
+        </li>
+      </ul>
+      <p class="bg">
+        const Profile = ({ name, email }) =&gt; ( <br />
+        &lt;div&gt;<br />
+        &lt;p&gt;Name: {name}&lt;/p&gt;<br />
+        &lt;p&gt;Email: {email}&lt;/p&gt;<br />
+        &lt;/div&gt;<br />
+        )<br /><br />
+
+        const Panel = ({ title, children }) =&gt; (<br />
+        &lt;section&gt;<br />
+        &lt;h2&gt;{title}&lt;/h2&gt;<br />
+        {children}<br />
+        &lt;/section&gt;<br />
+        )<br /><br />
+
+        const App3 = () =&gt; (<br />
+        &lt;div&gt;<br />
+        &lt;Panel title=&quot;User profile&quot;&gt;<br />
+        &lt;Profile name=&quot;Boris&quot;
+        email=&quot;boris@gmail.com&quot;/&gt;<br />
+        &lt;/Panel&gt;<br />
+        &lt;/div&gt;<br />
+        )
+      </p>
+      <p>
+        В противном случае нам бы пришлось прокинуть props для &lt;Profile/&gt;
+        что теснее связывает компоненты и это затрудняет повторное использование
+        <br />
+        <b>Свойства propTypes</b> <br />
+        Проверка типов получаемых props позволит отловить много ошибок, это
+        экономит время на дебаг. Помогает при невнимательности и спасается
+        постом в приложении. В будущем нужно будет уделить время и познакомится
+        с flow или typeScript. <br />
+        Пакет propTypes представляет ряд валидаторов для проверки корректности
+        получаемых типов данных при выполнении кода, сообщая о несовместимостях
+        или несоответствии в консоли. Все что необходимо сделать - это описать
+        типы props, получаемых компонентов в спец статическом свойству
+        propTypes. Происходит только при разработке, в продакшене в ней нет
+        необходимости. <br />
+        npm i prop-types
+      </p>
+      <p>Используем propTypes и опишем props компонента Product</p>
+      <p class="bg">
+        import PropTypes from &quot;prop-types&quot;; <br />
+        const Product5 = ({<br />
+        imgUrl =
+        '&lt;https://images.pexels.com/photos/461198/pexels-photo-461198.jpeg?dpr=2&amp;h=480&amp;w=640&gt;',<br />
+        name,<br />
+        price,<br />
+        }) =&gt; (<br />
+        &lt;div&gt;<br />
+        &lt;img src={imgUrl} alt={name} width=&quot;640&quot; /&gt;<br />
+        &lt;h2&gt;{name}&lt;/h2&gt;<br />
+        &lt;p&gt;Price: {price}$&lt;/p&gt;<br />
+        &lt;button type=&quot;button&quot;&gt;Add&lt;/button&gt;<br />
+        &lt;/div&gt;<br />
+        );<br /><br />
+
+        Product5.propTypes = {<br />
+        imgUrl: PropTypes.string,<br />
+        name: PropTypes.string.isRequired,<br />
+        price: PropTypes.number.isRequired,<br />
+        }
+      </p>
+      <p>
+        Первоначально применяется значение по умолчанию, заданое в defaultProps,
+        после этого запускается проверка типов с помощью propTypes,
+        следовательно проверка типов распространяется и на значение типов
+        заданых по умолчанию <br />
+      </p>
+      <h3 class="title">Рендер по условию</h3>
+      <p>
+        Для рендера разметки по условиям используются операторы разветвлений и
+        условий. Условия можно проверить перед возвратом разметки или прямо в
+        JSX. Если по условию ничего не должно быть можно вернуть null или
+        undefind, они false, не рендерятся <br />
+        <b>if с помощью логического оператора &&</b><br />
+        Читается как если условие приводится к true то рендерится разметка
+      </p>
+      <p class="bg">
+        const MailBox = ({ underMessages }) =&gt; { <br />
+        return (<br />
+        &lt;div&gt;<br />
+        &lt;h1&gt;Hello&lt;/h1&gt;{underMessages &gt; 0 &amp;&amp; (&lt;p&gt;U
+        have {underMessages.length}&lt;/p&gt;)}<br />
+        &lt;/div&gt;<br />
+        )<br />
+        }
+      </p>
+      <p>
+        <b> if else с помощью тернарного оператора </b><br />
+        Читается как если условие приводится к true рендерим разметку после
+        <b>?</b> иначе рендерим разметку после <b>:</b>
+      </p>
+      <p class="bg">
+        const MailBox1 = ({ userName, unreadMessage }) =&gt; { <br />
+        return (<br />
+        &lt;div className=&quot;&quot;&gt;<br />
+        &lt;h1&gt;Hello {userName}&lt;/h1&gt;<br />
+        {unreadMessage.length &gt; 0 ? (<br />
+        &lt;p&gt;U have {unreadMessage.length} messages&lt;/p&gt;<br />
+        ) : (<br />
+        &lt;p&gt;No unread messages&lt;/p&gt;<br />
+        )}<br />
+        &lt;/div&gt;<br />
+        );<br />
+        };
+      </p>
+      <p>Последний пример можно записать по другому с таким же результатом</p>
+      <p class="bg">
+        const MailBox2 = ({ userName, unreadMessage }) =&gt; { <br />
+        return (<br />
+        &lt;div className=&quot;&quot;&gt;<br />
+        &lt;h1&gt;Hello {userName}&lt;/h1&gt;<br />
+        &lt;p&gt;<br />
+        {unreadMessage.length &gt; 0<br />
+        ? `U have ${unreadMessage.length} unread messages`<br />
+        : 'No unread messages'}<br />
+        &lt;/p&gt;<br />
+        &lt;/div&gt;<br />
+        );<br />
+        };
+      </p>
+      <p>Пусть в компоненте продукта есть его доступное кол-во</p>
+      <p class="bg">
+        const Product5 = ({ imgUrl, name, price, quantity }) =&gt; ( <br />
+        &lt;div className=&quot;&quot;&gt;<br />
+        &lt;img src={imgUrl} alt={name} width=&quot;640&quot; /&gt;<br />
+        &lt;h2&gt;{name}&lt;/h2&gt;<br />
+        &lt;p&gt;Price: {price}$&lt;/p&gt;<br />
+        &lt;h1&gt;Quantity: {quantity &lt; 20 ? `Left ${quantity}` : `In
+        stock`}&lt;/h1&gt;<br />
+        &lt;button type=&quot;button&quot;&gt;Add&lt;/button&gt;<br />
+        &lt;/div&gt;<br />
+        )
+      </p>
+      <h3 class="title">Коллекции</h3>
+      <p>
+        Для того чтобы отрендерить коллекцию однотиповых элементов используется
+        метод Array.prototype.map(), колбэк функция которого для каждого
+        элемента коллекции возвращает JSX разметку и получаем массив реакт
+        элементов, которые можно рендерить.
+      </p>
+      <p class="bg">
+        const favoritesBooks = [ <br />
+        { id: &quot;id1&quot;, name: &quot;JS&quot; },<br />
+        { id: &quot;id2&quot;, name: &quot;CSS&quot; },<br />
+        { id: &quot;id3&quot;, name: &quot;HTML&quot; },<br />
+        { id: &quot;id4&quot;, name: &quot;React&quot; },<br />
+        { id: &quot;id5&quot;, name: &quot;TypeScript&quot; },<br />
+        ];<br />
+        const BookList = ({ books }) =&gt; {<br />
+        return (<br />
+        &lt;ul&gt;<br />
+        {books.map(book =&gt; {<br />
+        &lt;li&gt;{book.name}&lt;/li&gt;<br />
+        })}<br />
+        &lt;/ul&gt;<br />
+        )<br />
+        }<br /><br />
+
+        const App4 = () =&gt; {<br />
+        return (<br />
+        &lt;div className=&quot;&quot;&gt;<br />
+        &lt;BookList books={favoritesBooks} /&gt;<br />
+        &lt;/div&gt;<br />
+        )<br />
+        }<br />
+      </p>
+      <p>
+        <b>Ключи</b><br />
+        При выполнении кода всплывает предупреждение о том что для элементов
+        списка требуется ключ. React не может отличить элементы в коллекции
+        таким образом, перерисовывая всю коллекцию полностью при любых
+        изменениях. <br />
+        <b>Ключ "key"</b> это специально строковый prop который нужно задать при
+        создании элемента в коллекции <br />
+        Элементы внутри коллекции должны быть снабжены ключами чтобы обладать
+        стабильной идентичностью. React использует ключи чтобы определить какие
+        элементы в коллекции необходимо создать и отрендерить, а не использовать
+        элементы из предидущего рендера. Таким образом мы избегаем
+        преобразование всех элементов в коллекции всякий раз когда мы что-то
+        меняем. <br />
+        Ключи должны быть: <br />
+        <b
+          >Уникальные - ключ элемента должен быть уникален только среди его
+          соседей. Нет смысла в глобально уникальных ключах</b
+        >
+        <br />
+        <b
+          >Стабильные ключи элемента не должны изменяться со временем,
+          изменением порядка элементов или после обновления страницы</b
+        >
+        <br />
+        <b
+          >Индексы массивов уникальны, однако они не стабильны. При перетасовке
+          коллекции ключи меняются. Дата и время уникальны, но не стабильны,
+          поскольку постоянно увеличиваются. Таким образом при каждом рендере
+          создаются новые ключи. Использование случайного числа равносильно
+          тому, что ключи совсем не используются, покольку случайные числа не
+          уникальные и не стабильные</b
+        ><br />
+        <b
+          >Лучший способ задать ключ - использовать статическую строку, которая
+          однозначно идентифицирует элемент списка среди других. Чаще всего в
+          качестве ключей исполльзуются идентификаторы объектов, созданые базой
+          данных - постоянное неизменимое значение. Но так же подойдет любое
+          уникальное значение какого-либо свойства объекта</b
+        >
+      </p>
+      <p class="bg">
+        const BookList1 = ({ books }) =&gt; ( <br />
+        &lt;ul&gt;<br />
+        {books.map(book =&gt; {<br />
+        &lt;li key={book.id}&gt;{book.name}&lt;/li&gt;;<br />
+        })}<br />
+        &lt;/ul&gt;<br />
+        );
+      </p>
+      <p>
+        Использование индексов для ключей - это крайний случай. В подавляющем
+        большинстве данных будут уникальные идентификаторы или другие свйоства.
+      </p>
+      <h3 class="title">Встроенные стили</h3>
+      <p>
+        Существует несколько способов стилизации компонентов. Самый простой но в
+        то же время наиболее ограниченный - это встроенные стили. Для этого
+        используется атрибут style который в react принимает не строчку а объект
+        стилей
+      </p>
+      <p class="bg">
+        const App5 = () =&gt; { <br />
+        return (<br />
+        &lt;p style={{ margin: 0, padding: &quot;12px 16px,&quot; borderRadius:
+        8 }}&gt;Text&lt;/p&gt;<br />
+        )<br />
+        }<br />
+      </p>
+      <p>
+        На примере можно выделить несколько обязательных правил встроенных
+        стилей
+      </p>
+      <ul>
+        <li>
+          Имена свойств состоящих из двух и более слов например background-color
+          обязательно должны быть записаны в camelCase нотации
+          (<b>backgroundColor</b>) как при обращении к свойствам объекта style в
+          DOM element
+        </li>
+        <li>
+          К числовым значениям большинства свойств будет автоматически добавлен
+          суффикс <b>px</b>. Если необходимо использовать еденицы отличные от
+          пикселей или значение состоит из несколькольких частей оно указывает
+          как строка <b>"padding: "12px 16px"</b>
+        </li>
+      </ul>
+      <p>
+        Вынесем объект стилей в переменную чтобы повысить читабельность jsx
+        разметки
+      </p>
+      <p class="bg">
+        const alertStyle = { <br />
+        margin: 8,<br />
+        padding: '10px 12px',<br />
+        backgroundColor: 'teal',<br />
+        color: 'grey',<br />
+        borderRadius: 8,<br />
+        };<br /><br />
+
+        const App6 = () =&gt; {<br />
+        return (<br />
+        &lt;&gt;<br />
+        &lt;p style={alertStyle}&gt;Lorem ipsum dolor sit amet.&lt;/p&gt;<br />
+        &lt;p style={alertStyle}&gt;Lorem ipsum dolor sit amet.&lt;/p&gt;<br />
+        &lt;/&gt;<br />
+        );<br />
+        };<br />
+      </p>
+      <p>
+        Создадим компонент Alert который будет рендерить абзац текста и скроет в
+        себе будущую логику выбора цвета фона
+      </p>
+      <p class="bg">
+        const alertStyle1 = { <br />
+        margin: 8,<br />
+        padding: '10px 12px',<br />
+        backgroundColor: 'teal',<br />
+        color: 'grey',<br />
+        borderRadius: 8,<br />
+        };<br /><br />
+
+        export const Alert = ({ children }) =&gt; {<br />
+        return &lt;p style={alertStyle1}&gt;{children}&lt;/p&gt;<br />
+        }<br />
+      </p>
+      <p>Используем компонент Alert для рендера нескольких сообщений</p>
+      <p class="bg">
+        // Components/Alert.js
+        <br /><br />
+
+        const alertStyle1 = {<br />
+        margin: 8,<br />
+        padding: '10px 12px',<br />
+        backgroundColor: 'teal',<br />
+        color: 'grey',<br />
+        borderRadius: 8,<br />
+        };<br /><br />
+
+        export const Alert = ({ children }) =&gt; {<br />
+        return &lt;p style={alertStyle1}&gt;{children}&lt;/p&gt;;<br />
+        };<br /><br />
+
+        // Components/App.js<br />
+        import { Alert } from 'Alert';<br /><br />
+
+        const App7 = () =&gt; {<br />
+        return (<br />
+        &lt;&gt;<br />
+        &lt;Alert&gt;Lorem ipsum dolor sit amet.1&lt;/Alert&gt;<br />
+        &lt;Alert&gt;Lorem ipsum dolor sit amet.2&lt;/Alert&gt;<br />
+        &lt;Alert&gt;Lorem ipsum dolor sit amet.3&lt;/Alert&gt;<br />
+        &lt;Alert&gt;Lorem ipsum dolor sit amet.4&lt;/Alert&gt;<br />
+        &lt;Alert&gt;Lorem ipsum dolor sit amet.5&lt;/Alert&gt;<br />
+        &lt;/&gt;<br />
+        );<br />
+        };<br />
+      </p>
+      <p>
+        Сделаем так, чтобы в зависимости от типа оповещения в компоненте Alert
+        изменялся цвет фона абзаца. Для этого добавим ему обязательный props -
+        <b>variant</b> с несколькими возможными значениями
+      </p>
+      <p class="bg">
+        const App8 = () =&gt; { <br />
+        return (<br />
+        &lt;&gt;<br />
+        &lt;Alert variant=&quot;error&quot;&gt;Lorem ipsum dolor sit
+        amet.1&lt;/Alert&gt;<br />
+        &lt;Alert variant=&quot;success&quot;&gt;Lorem ipsum dolor sit
+        amet.2&lt;/Alert&gt;<br />
+        &lt;Alert variant=&quot;warning&quot;&gt;Lorem ipsum dolor sit
+        amet.3&lt;/Alert&gt;<br />
+        &lt;Alert variant=&quot;info&quot;&gt;Lorem ipsum dolor sit
+        amet.4&lt;/Alert&gt;<br />
+        &lt;/&gt;<br />
+        );<br />
+        };
+      </p>
+      <p>
+        Логику выбора цвета вынесем в функцию selectBgColor(variant), которая
+        будет возвращать строку с названием цвета в зависимости от значения
+        параметра variant
+      </p>
+      <p class="bg">
+        // Components/Alert.js
+        <br /><br />
+
+        const alertStyle2 = {<br />
+        margin: 8,<br />
+        padding: '10px 12px',<br />
+        backgroundColor: 'teal',<br />
+        color: 'grey',<br />
+        borderRadius: 8,<br />
+        };<br /><br />
+
+        const selectBgColor = variant =&gt; {<br />
+        switch (variant) {<br />
+        case 'info':<br />
+        return 'blue';<br />
+        case 'warning':<br />
+        return 'yellow';<br />
+        case 'success':<br />
+        return 'green';<br />
+        case 'error':<br />
+        return 'red';<br />
+        default:<br />
+        throw new Error(`Wrong variant prop value - ${variant}`);<br />
+        }<br />
+        };<br /><br />
+
+        export const Alert3 = ({ variant, children }) =&gt; {<br />
+        return &lt;p style={{ ...alertStyle2, backgroundColor:
+        selectBgColor(variant) }}&gt;{children}&lt;/p&gt;;<br />
+        };<br />
+      </p>
+      <p><b>Динамические стили</b></p>
+      <p>
+        Создание финального значения атрибута style - базовые стили alertStyle и
+        динамический backgroundColor в зависимости от props variant. Такой
+        подход применяется в случае когда значение одного или более свойств
+        зависит от props. Например если ссылка на изображение передается как
+        props.
+      </p>
+      <p>
+        Встроенные стили могут казаться удобными из-за простоты использования,
+        но они имеют ряд недостатков
+      </p>
+      <ul>
+        <li>Очень слабая масштабируемость и повторное использование стилей</li>
+        <li>
+          Ограниченные возможности (псевдоклассы, псевдоэлементы, адаптивные
+          свойства)
+        </li>
+        <li>
+          Плохая производительность при отрисовке в том случае если большое
+          кол-во элементов
+        </li>
+        <li>Отсутствие удобных инструментов разработчика</li>
+        <li>Нет поддержки в популярных инструментах, например autofixer</li>
+      </ul>
+      <h3 class="title">Ванильный css</h3>
+      <p>
+        Оформление компонента можно вынести в таблицу стилей. В этом случае
+        стили каждого компонента объявляются в отдельном файле css компонента с
+        расширением .css. Имя файла состоит из имени компонента Alert и стилей
+        Alert.css
+      </p>
+      <p class="bg">
+        // Components/Alert.css
+        <br /><br />
+
+        .alert {<br />
+        margin: 8px;<br />
+        padding: 10px 12px;<br />
+        background-color: teal;<br />
+        color: grey;<br />
+        border-radius: 8px;<br />
+        }<br />
+      </p>
+      <p>
+        Стили компонента импортируются в файл, почле чего классы css описаны в
+        таблице стилей, доступны для использования. В react html атрибуте класс
+        соответствует jsx атрибуту className, куда можно передать строку с
+        перечислением всех классов элемента
+      </p>
+      <p class="bg">
+        import &quot;./Alert.css&quot;; <br /><br />
+
+        const Alert = ({ children }) =&gt; {<br />
+        return &lt;p className='alert'&gt;{children}&lt;/p&gt;<br />
+
+        }
+      </p>
+      <p>
+        На стадии сборки проэкта react минимизирует css и автоматически
+        добавляет вендорные префиксы при помощи автопрефексира. Современный
+        синтаксис и возможности css покрываются для поддержки старых браузеров,
+        поэтому разработчику не нужно беспокоится об этом <br />
+        <b>Композиция классов</b><br />
+        Добавим классы css для каждго типа оповещения чтобы контролировать цвет
+        фона в зависимости от значения props variant
+      </p>
+      <p class="bg">
+        // Components/Alert.css
+        <br /><br />
+
+        .alert {<br />
+        margin: 8px;<br />
+        padding: 10px 12px;<br />
+        background-color: teal;<br />
+        color: grey;<br />
+        border-radius: 8px;<br />
+        }<br /><br />
+
+        .alert.info{<br />
+        background - color: blue;<br />
+        }<br /><br />
+        .alert.warning{<br />
+        background - color: yellow;<br />
+        }<br /><br />
+        .alert.success{<br />
+        background - color: green;<br />
+        }<br /><br />
+        .alert.error{<br />
+        background - color: red;<br />
+        }<br />
+      </p>
+      <p>
+        Добавим компонента Alert два необязательных props - outlined, elevated.
+        Их значения могут быть только true, false & undefined. Если значения
+        этих свйоств true то будем добавлять тег &lt;p&gt; is - outlined и is -
+        elevated
+      </p>
+      <p class="bg">
+        .alert.is-outlined { <br />
+        outline: 1px solid black;<br />
+        }<br /><br />
+
+        .alert.is-elevated {<br />
+        box-shadow: 1px 3px;<br />
+        }
+      </p>
+      <p>
+        Процесс вычесления финального атрибута className зависит от разработчика
+        и текущего задания. К примеру используя массив строк и блок if. Классы
+        alert и какой-нибудь из вариантов будет всегда, а классы для props
+        outlined и elevated добавляем только по необходимости.
+      </p>
+      <p class="bg"></p>
+      // Components/Alert.jsx
+      <br /><br />
+      import &quot;./Alert.css&quot;;<br /><br />
+
+      const Alert4 = ({ variant, outlined, elevated, children }) =&gt; {<br />
+      const className = [&quot;alert&quot;, &quot;variant&quot;];<br />
+      if (outlined) className.push(&quot;is-outlined&quot;)<br />
+      if (elevated) className.push(&quot;is-elevated&quot;)<br />
+      return &lt;p className={className.join(&quot;
+      &quot;)}&gt;{children}&lt;/p&gt;<br />
+      }<br />
+      <p>
+        Для вычисления финального значения атрибуда className можно было
+        использовать блок if-else, инструкцию switch, тернарный оператор или
+        любой другой синтаксис js который даст нам тот же результат. Главное
+        чтобы строка с классами была составлена правильно и не имела лишних или
+        не валидных значений
+      </p>
+      <h3 class="title">Библиотека CLSX</h3>
+      <p>
+        npm i clsx <br />
+        Функции CLSX можно передать список выражений в качестве набора
+        аргументов. Выражения приводимые к true, результат которых это строка
+        или число будут добавлены в финальную строку классов
+      </p>
+      <p class="bg">
+        import clsx from 'clsx'; <br /><br />
+
+        const className = clsx(<br />
+        'first', 10, undefined && 'second', true && 'third', false ? 'fourth' :
+        'fifeth'<br />
+        )<br />
+        console.log(className); // "first 10 third fourth"<br />
+      </p>
+      <p>
+        Так будет выглядеть код компонента alert используя библиотеку CLSX. Даже
+        в таком случае код становится проще и читабельнее.
+      </p>
+      <p class="bg">
+        import clsx from 'clsx'; <br />
+        import &quot;./Alert.css&quot;;<br /><br />
+
+        const Alert5 = ({ variant, outlined, elevated, children }) =&gt; {<br />
+        return (<br />
+        &lt;p className={clsx(<br />
+        &quot;alert&quot;, variant, outlined &amp;&amp; &quot;is-outlined&quot;,
+        elevated &amp;&amp; &quot;is-elevated&quot;<br />
+        )}&gt;{children}&lt;/p&gt;<br />
+        )<br />
+        }<br />
+      </p>
+      <p>
+        Можно комбинировать вариативную и объектную форму функций CLSX, сначала
+        передаются классы, которые будут всегда, после чего в объекте
+        перечисляем динамические значения классов в зависимости от каких либо
+        вычислений
+      </p>
+      <p class="bg">
+        import clsx from 'clsx'; <br />
+        import './Alert.css';<br /><br />
+
+        const Alert6 = ({ variant, outlined, elevated, children }) =&gt; {<br />
+        return (<br />
+        &lt;p<br />
+        className={clsx(<br />
+        'alert', variant, {<br />
+        'is-outlined': outlined,<br />
+        'is-elevated': elevated,<br />
+        }<br />
+        )}<br />
+        &gt;<br />
+        {children}<br />
+        &lt;/p&gt;<br />
+        );<br />
+        };<br />
+      </p>
+      <h3 class="title">Глобальное пространство имен</h3>
+      <p>
+        Импорт стилей компонента в файл его объявления - это просто хорошая
+        практика, к примеру если сделать импорт стилей например Alert.css в
+        компоненте App то ничего не сломается. В результате весь объявленный
+        импорт css кода просто добавляется в общую таблицу стилей вместе со всем
+        остальным css кодом проэкта из других компонентов. <br />
+        В коде будем проблема css конфликт правил с селектором класса text в
+        зависимости от порядка импорта этих двух css файлов. В приложении
+        финальные стили файла text могут отличаться или смотреться по разному
+      </p>
+      <p class="bg">
+        // First component css
+        <br />
+        .text{<br />
+        color: red;<br />
+        font - size: 16px;<br />
+        }<br /><br />
+
+        // Second component css<br />
+        .text {<br />
+        color: blue;<br />
+        }<br />
+      </p>
+      <p>
+        Уникальность имен <br />
+        Имена селекторов класса должны быть уникальными во всем приложении чтобы
+        не было конфликтов css правил с одинаковыми селекторами в разных
+        компонентов.
+      </p>
+      <p>
+        <b>Препроцессоры</b> <br />
+        Использовать препроцессоры можно но возможность композиции компонентов
+        делает их менее полезными, поскольку заменяет такие процессы как примеси
+        функций, вложенность и другое. Не рекомендуется использовать одни и те
+        же css классы в различных компонентах. Для этого есть композиция
+        компонентов. <br />
+        Например вместо использования базоваго css класса button в компонентах
+        LoginButton и FollowButton лучше создать компонент Button со своими
+        собственными стилями, которые могут отображаться с несколькими
+        вариантами. Тогда компоненты LoginButton могут FollowButton использовать
+        компонент Button, а не просто css класс.
+      </p>
+      <p class="bg">
+        // Button.jsx
+        <br />
+        const Button = ({ variant, children }) =&gt; {<br />
+        // Базовые стили кнопки с несколькими вариантами отображения<br />
+        return &lt;button className={clsx(<br />
+        &quot;button&quot;, variant<br />
+        )}&gt;{children}&lt;/button&gt;<br />
+        }<br /><br />
+
+        // LoginButton.jsx<br />
+        const LoginButton = () =&gt; {<br />
+        // Уникальная логика кнопки login<br />
+        return &lt;Button variant='primery'&gt;Login&lt;/Button&gt;<br />
+        }<br /><br />
+
+        // FollowButton.jsx<br />
+        const FollowButton = () =&gt;{<br />
+        // Уникальная логика кнопки follow<br />
+        return &lt;Button
+        variant=&quot;secondary&quot;&gt;Follow&lt;/Button&gt;;<br />
+        }<br />
+      </p>
+      <p>
+        Использование ванильного css не самый лучий подход и имеет ряд
+        недостатков, особенно в больших проэктах
+      </p>
+      <ul>
+        <li>Слабая масштабируемость</li>
+        <li>Ограниченое повторное использование стилей</li>
+        <li>
+          Для динамических значений необходимо использовать встроенные стили
+        </li>
+        <li>Проблема глобального пространства имен</li>
+        <li>
+          Необходимо использовать какую-либо конвенцию именования селекторов
+          класса
+        </li>
+        <li>
+          Форматирование кода. Отсутствие автоматического удаления
+          неиспользованого кода
+        </li>
+      </ul>
+      <h3 class="title">Css модули</h3>
+      <p>
+        СSS модули это неофициальная спецификация, они неимплементированы в
+        браузере. Это процесс запускаемый на стадии составления проэкта
+        (например с помощью webpack), в результате выполнения которого имена
+        классов заменяются на уникальные. Это позволяет использовать одно и то
+        же имя класса в разных css файлах не беспокоясь о конфликтах имен. Этот
+        подход был разработан для решения проблем глобальной области видимости в
+        css <br />
+        create react App по умолчанию поддерживает css модули, все что
+        необходимо сделать это создать файлы стилей с расширением .module.css
+        например Alert.module.css. В модуле css можно использовать любой
+        валидный css
+      </p>
+      <p class="information"><b>src/components/Alert.module.css</b></p>
+      <p>
+        Хотя css модуль выглядит как обычный css на самом деле он компилируется
+        в формат icss (interoperable css) который предназначен для разработчиков
+        инструментов типа webpack, а не для конечных пользователей.
+        <br />
+        Синтаксис модуля css напоминает импорт файла js модуля. В css модуле
+        есть export по умолчанию, объект соотвестсвия оригинального и
+        генерируемых имен классов. В финальном файле стилей будут уникальные
+        имена классов в формате filename_classname__hash
+      </p>
+      <p class="bg">
+        // Синтаксис импорта css модуля
+        <br />
+        import css from './Alert.module.css';<br /><br />
+
+        // Получаем объект соответствия имен классов<br />
+        console.log(css); // {alert: 'Alert_alert_134asdf'}<br /><br />
+
+        const Alert7 = ({ children }) =&gt; {<br />
+        // Обращаемся к свойству объекта на имя класса из файла модуля<br />
+        return &lt;p className={css.alert}&gt;{children}&lt;/p&gt;;<br />
+        };<br />
+      </p>
+      <p>
+        <b>Глобальные стили</b><br />
+        По умолчанию селекторы тегов будут в глобальной области видимости. Css
+        модули генерируют только уникальные имена селекторов классов <br />
+        <b>Свойство composes</b><br />
+        Композиция селекторов - это одна из ключевых возможностей в css модуле,
+        которая позволяет создавать класс, следуя стилям другого класса но не
+        дублируя их. Используем композицию классов и выполняем рефакторинг
+        стилей компонента Alert. Следуем стилю базового класса .alert во всех
+        классах варианта. Cв-во composes должно предшевствовать другим правилам
+        чтобы можно было переопределять стили если это необходимо.
+      </p>
+      <p class="bg">
+        // Alert.module.css
+        <br />
+        .alert {<br />
+        margin: 10px;<br />
+        padding: 15px;<br />
+        border: 1px solid black;<br />
+        background - color: white;<br />
+        color: green;<br />
+        }<br /><br />
+
+        .information {<br />
+        composes: alert;<br />
+        background-color: blue;<br />
+        }<br /><br />
+
+        .success {<br />
+        composes: alert;<br />
+        background-color: green;<br />
+        }<br /><br />
+
+        .error {<br />
+        composes: alert;<br />
+        background-color: red;<br />
+        }<br /><br />
+
+        .warning {<br />
+        composes: alert;<br />
+        background-color: yellow;<br />
+        }<br />
+      </p>
+      <p>
+        При композиции в простых случаях можно обойтись без библиотеки clsx. Не
+        задаем базовый класс alert, потому что от него выполнена композиция
+        классов вариантов. В результате на элементе "p" будут 2 класса - базовый
+        alert и класс варианта, в котором переопределяется значения цвета фона
+      </p>
+      <p class="bg">
+        const Alert8 = ({ variant, children }) =&gt; { <br />
+        return &lt;p className={css[variant]}&gt;{children}&lt;/p&gt;;<br />
+        };<br />
+      </p>
+      <p>
+        <b>Доступ к свойствам</b><br />
+        К свойствам объекта обычно обращаются как css.alert но можно
+        использовать квадратные скобки например как css['alert']. Это полезно в
+        случае когда имя свойства сохраняется в переменную как в пропсе variant.
+        <br />
+        Добавим css классы для уже знакомых нам props outline и elevated. Имена
+        классов состоящих из нескольких слов записывается в camelCase нотации. В
+        противном случае, поскольку они становятся свойствами объекта, обращатся
+        к ним прийдется через квадратные скобки что менее удобно.
+      </p>
+      <p class="bg">
+        // CSS code
+        <br /><br />
+
+        .alert .isOutlined {<br />
+        outlined: 1px solid black;<br />
+        }<br /><br />
+
+        .alert .isElevated {<br />
+        box-shadow: rgba (255, 255, 255, 0.5)<br />
+        }<br />
+      </p>
+      <p class="bg">
+        const Alert9 = ({ variant, outlined, elevated, children }) =&gt; {<br />
+        return (<br />
+        &lt;p<br />
+        className={<br />
+        (css[variant],<br />
+        { [css.isOutlined]: outlined, [css.isElevated]: elevated })<br />
+        }<br />
+        &gt; {children}<br />
+        &lt;/p&gt;<br />
+        );<br />
+        };<br />
+      </p>
+      <p>
+        <b>Нормализация стилей</b> <br />
+        Стили элементов могут отличаться между браузерами. Чтобы привести их к
+        стандартному виду необходимо добавить набор правил исправляющие различия
+        в стилях элементов между браузерами насколько это возможно <br />
+        В create react App встроена возможность использовать postCssNormalize.
+        Смесь нескольких популярных таблиц стилей как normalize.css и как
+        sanitize.css. Все что необходимо сделать это добавить директиву
+        @import-normalize в любом месте файла стилей или css модуля.
+        Повторяющиеся импорты будут автоматически удалены, поэтому достаточно
+        добавить импорт в один файл стилей например index.css. Осталось
+        импортировать файл стилей index.css подключенный к нормализации в js
+        модуль в корневой файл программы index.js или файл компонента App.jsx.
+        <br />
+        Помимо стандартизации внешнего облика элементов может быть полезно
+        сбросить или добавить некоторые глобальные стили элементов. Например
+        отступы списков или заголовок, стили изображений, стили элемента body и
+        т.д. Будет логичнее сделать в том же файле в котором добалялась
+        нормализация <br />
+      </p>
+      <h3 class="title">Компоненты-классы</h3>
+      <p>
+        Если нужно добавить динамики компоненты создаются как классы т.к
+        компоненты-функции (до хуков) ограничены возможностью создания разметки
+        по получениям к props
+      </p>
+      <img src="./images/class_component.jpg" alt="" />
+      <ul>
+        <li>
+          Обычный es6 класс используется правило: конструктор, способы, контекст
+          this
+        </li>
+        <li>Обязательно расширяет базовый класс react.component</li>
+        <li>
+          Действует как получаемая функция props но так же реализует внутреннее
+          состояние
+        </li>
+        <li>
+          Необходимо объявить обязательный метод render() вызываемый по
+          умолчанию и возвращающий jsx разметку
+        </li>
+        <li>
+          Каждый раз при использовании компонент класса react будет создавать
+          экземпляр компонент (класс) поэтому доступ к props происходит через
+          this.props
+        </li>
+        <li>
+          Можно определить кастомные методы класса и использовать их в любом
+          месте, в том числе внутри jsx, вызывать или передавать children в
+          качестве props
+        </li>
+        <li>
+          Когда изменяется состоянии или props компонента происходит его рендер
+        </li>
+      </ul>
+      <p class="bg">
+        // Именуемые импорты повышают читабельность кода
+        <br />
+        import react, { Component } from 'react';<br /><br />
+
+        class MyClassComponent extends Component {<br />
+        static deafultProps = {};<br />
+        static propTypes = {};<br />
+        render() {<br />
+        return &lt;div&gt;Class Component&lt;/div&gt;;<br />
+        }<br />
+        }
+      </p>
+      <h3 class="title">События</h3>
+      <p>
+        Для нативного события браузера в react создается объект-обортка с
+        идентичным интерфейсом. Это необходимо для кросс-браущерности и
+        оптимизации производительности
+      </p>
+      <p class="bg">
+        &lt;button onClick={event =&gt;
+        console.log(event)}&gt;Click&lt;/button&gt;
+      </p>
+      <p>
+        Добаление обработчика события eventtarget.addEventListener почти не
+        используется. Props событий не исключение и именуются camelCase. К
+        примеру: onClick, onChange, onSubmit, onMouseEnter. В props события
+        передается ссылка на callback функцию, которая будет вызвана при
+        событии. Обработчики событий получают экземпляр SyntheticEvent Object
+        <br />
+        В react (под капотом) реализовано делегирование событий. Слушатели не
+        прилагаются непосредственно к DOM элементу. Передача callback - просто
+        регистрация функции, которая вызвана внутренними механизмами react при
+        событии <br />
+        <b>Счетчик</b> <br />
+        Создадим компонент счетчик с возможностью увеличения и уменьшения.
+      </p>
+      <p class="bg">
+        import React, { Component } from 'react'; <br />
+        import reactDOM from 'react-dom';<br /><br />
+
+        class Counter extends Component {<br />
+        static defaultProps = {<br />
+        step: 1,<br />
+        }<br />
+        render() {<br />
+        const { step } = this.props;<br />
+        return (<br />
+        &lt;div&gt;<br />
+        &lt;span&gt;0&lt;/span&gt;<br />
+        &lt;button type=&quot;button&quot;&gt;+ {step}&lt;/button&gt;<br />
+        &lt;button type=&quot;button&quot;&gt;- {step}&lt;/button&gt;<br />
+        &lt;/div&gt;<br />
+        )<br />
+        }<br />
+        }<br /><br />
+
+        reactDOM.render(&lt;Counter step={5} /&gt;,
+        document.getElementById('root'));
+      </p>
+      <p>
+        <b>Анонимные колбэки</b><br />
+        Инлайн callbacks считаются антипаттерными. Каждый раз когда компонент
+        будет рендерится будет создана новая callback функция. Во многих случаях
+        это нормально, но если callback передается как prop компоненты ниже в
+        дереве, они будут снова отрендерены, поскольку прийдут новые props
+        ссылочного типа. К тому же большие инлайн функции jsx мешают
+        читабельности разметки компонента.
+      </p>
+      <p class="bg">
+        class Counter1 extends Component {<br />
+        render() {<br />
+        const { step1 } = this.props;<br />
+        return (<br />
+        &lt;div&gt;<br />
+        &lt;span&gt;0&lt;/span&gt;<br />
+        &lt;button<br />
+        type=&quot;button&quot;<br />
+        onClick={evt =&gt; {<br />
+        console.log('Increment was clicked', evt);<br />
+        console.log('This props: ', this.props);<br />
+        }}<br />
+        &gt; Increment by step {step1}<br />
+        &lt;/button&gt;<br />
+        &lt;button<br />
+        type=&quot;button&quot;<br />
+        onClick={evt =&gt; {<br />
+        console.log('Increment was clicked', evt);<br />
+        console.log('This props: ', this.props);<br />
+        }}<br />
+        &gt; Decrement by step {step1}<br />
+        &lt;/button&gt;<br />
+        &lt;/div&gt;<br />
+        );<br />
+        }<br />
+        }<br />
+      </p>
+      <p>
+        Кастомные методы <br />
+        Чаще обработчики событий объявляются как методы класса, после чего jsx
+        атрибуту передается ссылка на метод.
+      </p>
+      <p class="bg">
+        class Counter2 extends Component { <br />
+        handleIncrement(evt) {<br />
+        console.log('Increment was clicked', evt);<br />
+        console.log('This props: ', this.props);<br />
+        }<br />
+        handleDecrement(evt) {<br />
+        console.log('Decrement was clicked', evt);<br />
+        console.log('This props: ', this.props);<br />
+        }<br /><br />
+
+        render() {<br />
+        const { step1 } = this.props;<br />
+        &lt;div&gt;<br />
+        &lt;span&gt;0&lt;/span&gt;<br />
+        &lt;button type=&quot;button&quot; onClick={this.handleIncrement}&gt;<br />
+        Increment by step {step1}<br />
+        &lt;/button&gt;<br />
+        &lt;button type=&quot;button&quot; onClick={this.handleDecrement}&gt;<br />
+        Decrement by step {step1}<br />
+        &lt;/button&gt;<br />
+        &lt;/div&gt;;<br />
+        }<br />
+        }<br />
+      </p>
+      <p>
+        <b>Привязка контента</b><br />
+        Нужно всегда помнить о значениях this методах используемых в качестве
+        callbacks в функции. В js контекст методах классов не привязывается по
+        умолчанию. Если забыть привязать контекст и передать метод как callback
+        функцию обработчику события в время вызова функции this будет
+        неопределен (undefind) <br />
+        <b>Привязка при передачи callback</b><br />
+        Избегайте привязки контекста в методе render(). Каждый раз когда
+        компонент рендерится function.prototype.bind возвращает новую функцию и
+        передает ее вниз по дереву компонентов, что приводит к повторному
+        рендеру дочерних компонентов. При большом кол-ве это оказывает
+        существенное влияние на производительность.
+      </p>
+      <p class="bg">
+        // ====================================== Плохой пример ❌<br /><br />
+
+        class Counter2 extends Component {<br />
+        handleIncrement(evt) {<br />
+        console.log('Increment was clicked', evt);<br />
+        console.log('This props: ', this.props);<br />
+        }<br />
+        handleDecrement(evt) {<br />
+        console.log('Decrement was clicked', evt);<br />
+        console.log('This props: ', this.props);<br />
+        }<br />
+
+        render() {<br />
+        const { step1 } = this.props;<br />
+        &lt;div&gt;<br />
+        &lt;span&gt;0&lt;/span&gt;<br />
+        &lt;button type=&quot;button&quot;
+        onClick={this.handleIncrement.bind(this)}&gt;<br />
+        Increment by step {step1}<br />
+        &lt;/button&gt;<br />
+        &lt;button type=&quot;button&quot;
+        onClick={this.handleDecrement.bind(this)}&gt;<br />
+        Decrement by step {step1}<br />
+        &lt;/button&gt;<br />
+        &lt;/div&gt;;<br />
+        }<br />
+        }<br />
+      </p>
+      <p>
+        <b>Привязка в конструкторе</b><br />
+        Еще один способ привязать контекст - это сделать в конструкторе класса.
+        Если callback функций много можно представить насколько велик
+        конструктор. Конструктор выполняется один раз, поэтому bind вызывается
+        один раз. Методы класса записываются в свойства prototype в функции
+        конструктора.
+      </p>
+      <p class="bg">
+        // ========================= Хороший пример ✅<br /><br />
+
+        class Counter extends Component {<br />
+        constructor() {<br />
+        super();<br />
+        this.handleIncrement = this.handleIncrement.bind(this);<br />
+        this.handleDecrement = this.handleDecrement.bind(this);<br />
+        }<br /><br />
+
+        handleIncrement(evt) {}<br />
+        handleDecrement(evt) {}<br /><br />
+
+        render() {<br />
+        const { step2 } = this.props;<br /><br />
+
+        return (<br />
+        &lt;div&gt;<br />
+        &lt;span&gt;0&lt;/span&gt;<br />
+        &lt;button type=&quot;button&quot; onClick={this.handleIncrement}&gt;<br />
+        Increment by step {step1}<br />
+        &lt;/button&gt;<br />
+        &lt;button type=&quot;button&quot; onClick={this.handleDecrement}&gt;<br />
+        Decrement by step {step1}<br />
+        &lt;/button&gt;<br />
+        &lt;/div&gt;<br />
+        );<br />
+        }<br />
+        }<br />
+      </p>
+      <p>
+        <b>Публичное свойство класса</b><br />
+        Несмотря на то что это рекомендуемый способ привязки контекста синтаксис
+        публичных полей классов еще не стандартизирован. Но они уже обширно
+        используются. <br />
+        При объявлении публичных полей класса они записываются не в свойство
+        prototype функции конструктора а в объект экземпляра.
+      </p>
+      <p class="bg">
+        class Counter extends Component {<br />
+        handleIncrement = evt =&gt; {<br />
+        console.log('Increment was clicked', evt);<br />
+        console.log('This props: ', this.props);<br />
+        };<br />
+        handleDecrement = evt =&gt; {<br />
+        console.log('Decrement was clicked', evt);<br />
+        console.log('This props: ', this.props);<br />
+        };<br /><br />
+
+        render() {<br />
+        const { step2 } = this.props;<br /><br />
+
+        return (<br />
+        &lt;div&gt;<br />
+        &lt;span&gt;0&lt;/span&gt;<br />
+        &lt;button type=&quot;button&quot; onClick={this.handleIncrement}&gt;<br />
+        Increment by step {step1}<br />
+        &lt;/button&gt;<br />
+        &lt;button type=&quot;button&quot; onClick={this.handleDecrement}&gt;<br />
+        Decrement by step {step1}<br />
+        &lt;/button&gt;<br />
+        &lt;/div&gt;<br />
+        );<br />
+        }<br />
+        }<br />
+      </p>
+      <h3 class="title">Внутреннее состояние компонента</h3>
+      <p>
+        <b>Объект состояния state</b> - это свойство класса, которое не додлжно
+        напрямую изменяться разработчиком
+      </p>
+      <ul>
+        <li>Данные в state контролируют отображаемое в интерфейсе</li>
+        <li>
+          Сохраняемые данные должны быть информацией, которая будет обновляться
+          методами компонента
+        </li>
+        <li>Не нужно дублировать данные в props состоянии</li>
+        <li>
+          Каждый раз, когда изменяется состояние компонента вызывается метод
+          render()
+        </li>
+      </ul>
+      <p>
+        В состоянии хранят минимальное кол-во данных из которых можно вычеслить
+        все необходимое для рендера интерфейса. Это делается вызовом селекторов
+        (функций состовляющих данные для интерфейса на основании состояний) в
+        методе render(). Таким образом мы получаем вычисляемые данные <br />
+        Интерфейс зависит от состояния компонента, состояние может изменятся как
+        реакция на действие пользователя. При изменении состояния данные
+        передаются вниз по дереву и компоненты возвращают обновленную разметку
+        изменяя интерфейс. <br />
+        Состояние принадлежит компоненту и меняется только его методами.
+        Изменение состояние компонента никогда не повлияет на его родителя,
+        соседей или на любой другой компонент в приложении, только на его
+        дочерние элементы. При такой модели данные в приложении передаются
+        только одним, жестко ограниченным образом. Это называется
+        однонаправленный поток данных. <br />
+        Состояния объявляются в конструкторе, поскольку это первое что
+        происходит когда создается экземпляр класса.
+      </p>
+      <p class="bg">
+        class Counter extends Component {<br />
+        constructor() {<br />
+        super() <br />
+        this.state = {value: 0}<br />
+        }<br /><br />
+
+        render() {<br />
+        return (<br />
+        &lt;div&gt;<br />
+        &lt;span&gt;{this.state.value}&lt;/span&gt;<br />
+        &lt;/div&gt;<br />
+        )<br />
+        }<br />
+        }<br />
+      </p>
+      <p>
+        <b>Начальное состояние от props</b><br />
+        Иногда исходные данные зависят от переданных props, например начальное
+        значение нашего счетчика. В этом случае необходимо явно объявить
+        параметр props и передать его в вызов super(). Тогда в конструкторе
+        будет доступно this.props
+      </p>
+      <p class="bg">
+        class Counter extends Component { <br />
+        static defaultProps = {<br />
+        step: 1,<br />
+        initialValue: 0,<br />
+        }<br />
+
+        constructor(props) {<br />
+        super(props)<br />
+        this.state = {value: this.props.initialValue}<br />
+        }<br /><br />
+
+        }<br />
+        reactDOM.render(<Counter initialValue="{10}" />,
+        document.getElementById("root"));<br />
+      </p>
+      <p>
+        Поскольку под капотом используется babel можно упустить объявление
+        конструктора и указать состояние как публичное свойство класса, все
+        остальное трансполлер сделает за вас.
+      </p>
+      <p class="bg">
+        class Counter extends Component { <br />
+        static defaultProps = {<br />
+        step: 1,<br />
+        initialValue: 0,<br />
+        };<br /><br />
+
+        state = {<br />
+        value: this.props.initialValue,<br />
+        }<br />
+        }
+      </p>
+      <p>
+        <b>Изменения состояния компонента</b><br />
+        Для обновления состояния используется встроенный метод setState().
+        <br />
+        <b>setState(updater, callback) </b> <br />
+        Первым обязательным аргументом передается объект с полями, указывающими
+        какую часть состояний необходимо изменить. Вторым необязательным
+        аргументом можно передать callback функцию, которая выполнится после
+        изменения состояния. <br />
+        <b
+          >Нельзя изменять состояние непосредственно по ссылке, надо быть
+          внимательным с ссылочными типами данных (массив, объект)</b
+        >
+      </p>
+      <p class="bg">
+        state = { <br />
+        fullName: "Ann",<br />
+        }<br /><br />
+
+        // Плохой пример<br />
+        this.state.fullName = "Ben";<br /><br />
+
+        // Хороший пример<br />
+        this.setState({ fullName: "Ben" });<br />
+      </p>
+      <p>
+        Этот подход используется когда новое состояние не расчитывается из
+        предидущего т.е когда в состоянии записывается что то новое,
+        перезаписывая уже существующее
+      </p>
+      <p class="bg">
+        class Toggle extends Component {<br />
+        state = { isOpen: false };<br /><br />
+
+        show = () =&gt; this.setState({ isOpen: true });<br />
+        hide = () =&gt; this.setState({ isOpen: false });<br /><br />
+
+        render() {<br />
+        const { isOpen } = this.state;<br />
+        const { children } = this.props;<br />
+        return (<br />
+        &lt;div&gt;<br />
+        &lt;button type=&quot;button&quot; onClick={this.show}&gt;<br />
+        Show<br />
+        &lt;/button&gt;<br />
+        &lt;button type=&quot;button&quot; onClick={this.hide}&gt;<br />
+        Hide<br />
+        &lt;/button&gt;<br />
+        {isOpen&&children} <br />
+        &lt;/div&gt;<br />
+        );<br />
+        }<br />
+        }
+      </p>
+      <p>
+        <b>Как объявляется состояние</b> <br />
+        Во время вызова setState() не нужно передавать все свойства. Достаточно
+        указать только ту часть, которую мы хотим изменить в данной операции.
+        Затем react берет текущее состояние и объект, который был передан в
+        setState() объеденяя их следующим образом.
+      </p>
+      <p class="bg">
+        // Объект до объеденения<br />
+        const currentState = {<br />
+        a: 1,<br />
+        b: 3,<br />
+        c: 4,<br />
+        d: 10<br />
+        }<br /><br />
+
+        // Объект переданный в setState()<br />
+        const update = {<br />
+        c: 11, <br />
+        d: 22<br />
+        }<br /><br />
+
+        // Новое значение this.state почле объединения <br />
+        const nextState = {<br />
+        ...currentState, ...update<br />
+        }<br />
+        // {a:1, b:3, c:11, d:22}
+      </p>
+      <p>
+        <b>Асинхронное обновление состояния</b><br />
+        Метод setState() регестрирует асинхронную операцию обновления состояния,
+        которая ставится в очередь обнолений. React изменяет состояние не для
+        каждого вызова setState(), а может объеденять нескольколько вызовов в
+        одно обноление для повыщения производительности. В результате доступ к
+        this.state синхронному коду после вызова этого метода вернет значение к
+        обновлению <br />
+        Представим что при измении состояния мы полагаемся на текущее значение
+        состояния в вычеслении следующего. Использем цикл for для нескольких
+        обновлений.
+      </p>
+      <p class="bg">
+        state = { value: 0 }; <br />
+        for (let i = 0; i < 3; i += 1){<br />
+        console.log(this.state.value); // 0<br />
+        this.setState({value: this.state.value + 1}) // 1<br />
+        }<br />
+      </p>
+      <p>
+        Значение св-ва this.state.value запоминается при создании передаваемого
+        объекта setState а не при обновлении состояния. Т.е если в момент
+        создания объекта this.state.value содерджалось 0 в фукнцию setState()
+        передается объект {value: 0+1} <br />
+        В результате выполнения цикла получаем очередь из трех объектов {value:
+        0+1} и оригинальное состояние на момент обновдения {value: 0}. После
+        всех обновлений получаем состояние {value: 1}, поэтому нельзя полагаться
+        на текущее состояние в вычеслении следующего, что зависит от предидущего
+        на момент обновления, это может привести к ошибкам, поэтому существует
+        второй способ обновить состояние. <br />
+        <b>setState() с функцией</b><br />
+        Этот подход используется когда новое значение вычесляется из предидущего
+        состояния. Метод setState() может принимать первым аргументом не объект
+        а фукцнию, которая должна возвращать объект, в котором мы хотим обновить
+        состояние.
+      </p>
+      <p class="bg">
+        setState((state, props) => { <br />
+        return {}<br />
+        }, callback) <br />
+      </p>
+      <p>
+        Актуальное состояние и props к моменту асинхронного выполнения функции
+        переданные в setStae() будут переданы в нее аргументами state и props.
+        Таким образом можно быть уверенным в корректном значении предидущего
+        состояния при создании следующего
+      </p>
+      <p class="bg">
+        state = { value: 0 }; <br />
+        for (let i = 0; i < 3; i += 1) {<br />
+        console.log(this.state.value); // 0<br />
+        this.setState(prevState => {<br />
+        console.log(prevState.value);<br />
+        return {<br />
+        value: prevState.value + 1,<br />
+        };<br />
+        });<br />
+        }<br />
+      </p>
+      <p>
+        Каждый раз во время вызова функции переданы в setState() в параметр
+        prevState() будет передана ссылка на актульное состояние на момент
+        обновления. Получим объект обновлений {value: 0+1}, {value: 1+1},
+        {value:2+1}, а результат this.state.value будет содержать 3. <br />
+      </p>
+      <p class="bg">
+        class Toggle extends Component { <br />
+        state = { isOpen: false };<br />
+        toggle = () =&gt; {<br />
+        this.setState(state =&gt; ({ isOpen: !state.isOpen }));<br />
+        };<br />
+        render() {<br />
+        const { isOpen } = this.state;<br />
+        const { children } = this.props;<br />
+        return (<br />
+        &lt;div&gt;<br />
+        &lt;button onClick={this.toggle}&gt;{isOpen ? 'hide' :
+        'show'}&lt;/button&gt;<br />
+        {isOpen &amp;&amp; children}<br />
+        &lt;/div&gt;<br />
+        );<br />
+        }<br />
+        }<br />
+      </p>
+      <p class="bg">
+        class Counter extends Component { <br />
+        handleIncrement = () => {<br />
+        this.setState((state, props) => ({<br />
+        value: state.value + props.step<br />
+        })) <br />
+        }<br />
+        handleDecrement = () => {<br />
+        this.setState((state, props) => ({<br />
+        value: state.value - props.step<br />
+        })) <br />
+        }<br />
+        }
+      </p>
+      <p>
+        <b>Подъем состояния</b><br />
+        Поскольку react использует однонаправленный поток данных сверху вниз,
+        для того чтобы изменить состояние родителя во время события в ребенке
+        используется след паттер с callback функцией <br />
+        У отца есть состояние и метод, которое его меняет. <br />
+        Дочернему элементу в форме props передается метод отца <br />
+        В дочернем элементе происходит вызов переданого ему способа. При вызове
+        этого метода меняется состояние отца <br />
+        Происходит render под древо компонентов родителя
+      </p>
+      <p class="bg">
+        const Button1 = ({ changeMessage, lable }) =&gt; (<br />
+        &lt;button type=&quot;button&quot; onClick={changeMessage}&gt;<br />
+        {lable}<br />
+        &lt;/button&gt;<br />
+        );<br /><br />
+
+        class App9 extends Component {<br />
+        state = { message: new Date().toLocaleTimeString() };<br />
+        // Метод который будем передавать в button во время вызова по нажатию<br />
+        updateMessage = (evt) =&gt; {<br />
+        const message = this.state.message;<br />
+        console.log(evt);<br />
+        this.setState({message: message})<br />
+        }<br /><br />
+
+        render() {<br />
+        return (<br />
+        &lt;&gt;<br />
+        &lt;span&gt;{message}&lt;/span&gt;<br />
+        &lt;Button1 changeMessage={this.updateMessage} lable={message}/&gt;<br />
+        &lt;/&gt;<br />
+        )<br />
+        }<br />
+        }<br />
+      </p>
+      <p>
+        Во время клика на кнопке состояния App обновляется с помощью callback
+        функции, контекст которой привязан к App. Этот паттерн устанавливает
+        четкую границу между умными и глупыми компонентами в контексте
+        приоритетов. <br />
+        <b>Паттерн подъема состояния может иметь любую вложенность</b> <br />
+        <b>Типы внутренних данных компонента класса</b>
+      </p>
+      <ul>
+        <li>
+          static data - статические свойства и методы которым необходимо
+          получать доступ без экземпляра
+        </li>
+        <li>
+          this.state.data - динамические данные изменяющиеся методами компонента
+          и состояния
+        </li>
+        <li>this.data - данные которые будут разными для каждого экземпляра</li>
+        <li>
+          const DATA - константа, не изменяющиеся данные и одинаковые для всех
+          экземпляров
+        </li>
+      </ul>
+      <h3 class="title">Формы</h3>
+      <p>
+        Неконтролируемые элементы <br />
+        Основная цель любой формы получить пользовательские данные. Для этого во
+        вроме сабмита можно получить значение полей по его свойству elements или
+        используя FormData. Такой прием уместно использовать когда данные полей
+        формы требуются только во время ее сабмита.
+      </p>
+      <p class="bg">
+        class LoginForm extends Component {<br />
+        handleSubmit = e =&gt; {<br />
+        e.preventDefault();<br />
+        const form = e.currentTarget;<br />
+        const login = form.elements.login.value;<br />
+        const password = e.elements.password.value;<br /><br />
+
+        console.log(login, password);<br /><br />
+
+        this.props.onSubmit({ login, password });<br />
+        form.reset();<br />
+        };<br /><br />
+
+        render() {<br />
+        return (<br />
+        &lt;form onSubmit={this.handleSubmit}&gt;<br />
+        &lt;input type=&quot;text&quot; name=&quot;login&quot;
+        placeholder=&quot;Login&quot;&gt;&lt;/input&gt;<br />
+        &lt;input type=&quot;password&quot; name=&quot;password&quot;
+        placeholder=&quot;Password&quot;&gt;&lt;/input&gt;<br />
+        &lt;button type=&quot;submit&quot;&gt;Login&lt;/button&gt;<br />
+        &lt;/form&gt;<br />
+        );<br />
+        }<br />
+        }<br />
+      </p>
+      <p>
+        <b>Контролируемые элементы</b><br />
+        Если значения элементов форм необходимо получить в момент смены поля и
+        сделать что нибудь динамично они должны быть контролируемыми. Т.е
+        значения всех полей должны быть в state. Этот прием работает с
+        элементами форм достаточно просто.
+      </p>
+      <img src="./images/state.jpg" alt="" />
+      <p>
+        Поле state определяет значение атрибута value поля, событие onChange
+        передается метод изменяющий поле в состоянии. <br />
+        Во время события onChange метод класса обновляет поле в состоянии. Во
+        время изменения состояния происходит рендер и инпут отображается с
+        обновленными данными. Недостаток в том, что вся форма будет повторно
+        рендерится во время каждой смены любого поля.
+      </p>
+      <p class="bg">
+        class App10 extends Component { <br />
+        state = { inputValue: '' }<br /><br />
+
+        handleChange = e =&gt; {<br />
+        this.setState({inputValue: e.target.value})<br />
+        }<br /><br />
+
+        render() {<br />
+        const { inputValue } = this.state;<br /><br />
+
+        return (<br />
+        &lt;input type='text' value={inputValue}
+        onChange={this.handleChange}/&gt;<br />
+        )<br />
+        }<br />
+        }<br />
+      </p>
+      <p>
+        Выходит что не интерфейс определяет какие у нас данные а наоборот данные
+        определяют то что видит пользователь, обновляя DOM при изменении
+        состояния компонента <br />
+        <b>Сложные формы</b>
+      </p>
+      <p class="bg">
+        class SignUpForm extends Component {<br />
+        state = { login: '' };<br /><br />
+
+        // Отвечает за обновление состояния<br />
+        handleChange = e =&gt; {<br />
+        this.setState({ login: e.target.value });<br />
+        };<br /><br />
+
+        // Вызывается при отправке формы<br />
+        handleSubmit = e =&gt; {<br />
+        e.preventDefault();<br />
+        console.log(`Sign up: ${this.state.login}`);<br /><br />
+
+        // Проп, который передается в форме для вызова во время submit<br />
+        this.props.onSubmit({ ...this.state });<br />
+        };<br /><br />
+
+        render() {<br />
+        const { login } = this.state;<br />
+        return (<br />
+        &lt;form onSubmit={this.handleSubmit}&gt;<br />
+        &lt;label&gt;<br />
+        Name<br />
+        &lt;input<br />
+        type=&quot;text&quot;<br />
+        placeholder=&quot;Enter Login&quot;<br />
+        value={login}<br />
+        onChange={this.handleChange}<br />
+        &gt;&lt;/input&gt;<br />
+        &lt;/label&gt;<br />
+        &lt;button type=&quot;submit&quot;&gt;Sign Up {login}&lt;/button&gt;<br />
+        &lt;/form&gt;<br />
+        );<br />
+        }<br />
+        }<br />
+      </p>
+      <p>
+        Добавим поля для email и password, заодно используем очень полезный
+        паттерн для callback функций передаваемый в onChange
+      </p>
+      <p class="bg">
+        // Выносим объект с примитивами в константу чтобы удобно было
+        сбрасывать<br />
+        // Нельзя использовать если в каком либо свойстве состояние сохраняет
+        сложный тип<br />
+        const INITIAL_STATE = { login: '', email: '', password: '' };<br /><br />
+
+        class SignUpForm2 extends Component {<br />
+        state = { ...INITIAL_STATE };<br /><br />
+
+        // Для всех инпутов создаем один обработчик<br />
+        // Различать ипуты будем по атрибуту name<br />
+        handleChange = e =&gt; {<br />
+        const { name, value } = e.target;<br />
+        this.setState({ [name]: value });<br />
+        };<br /><br />
+
+        handleSubmit = e =&gt; {<br />
+        e.preventDefault();<br />
+        const { login, email, password } = this.state;<br />
+        console.log(`Login: ${login}, Email: ${email}, Password:
+        ${password}`);<br /><br />
+
+        this.props.onSubmit({ ...this.state });<br />
+        this.reset();<br />
+        };<br /><br />
+
+        reset = () =&gt; {<br />
+        this.setState({ ...INITIAL_STATE });<br />
+        };<br /><br />
+        render() {<br />
+        const { login, email, password } = this.state;<br />
+        return (<br />
+        &lt;form onSubmit={this.handleSubmit}&gt;<br />
+        &lt;label&gt;<br />
+        Name<br />
+        &lt;input<br />
+        type=&quot;text&quot;<br />
+        placeholder=&quot;Enter login&quot;<br />
+        name=&quot;login&quot;<br />
+        value={login}<br />
+        onChange={this.handleChange}<br />
+        &gt;&lt;/input&gt;<br />
+        &lt;/label&gt;<br />
+        &lt;label&gt;<br />
+        Email<br />
+        &lt;input<br />
+        type=&quot;email&quot;<br />
+        placeholder=&quot;Enter email&quot;<br />
+        name=&quot;email&quot;<br />
+        value={email}<br />
+        onChange={this.handleChange}<br />
+        &gt;&lt;/input&gt;<br />
+        &lt;/label&gt;<br />
+        &lt;label&gt;<br />
+        Password<br />
+        &lt;input<br />
+        type=&quot;password&quot;<br />
+        placeholder=&quot;Enter password&quot;<br />
+        name=&quot;password&quot;<br />
+        value={password}<br />
+        onChange={this.handleChange}<br />
+        &gt;&lt;/input&gt;<br />
+        &lt;/label&gt;<br />
+        &lt;button type='submit'&gt;Sign up {login}&lt;/button&gt;<br />
+        &lt;/form&gt;<br />
+        );<br />
+        }<br />
+        }<br />
+      </p>
+      <p>
+        <b>Генерация id элементов форм</b><br />
+        Доступность (accessAbility, ally) очень важная тема в современном
+        интернете. HTML атрибут for тега label помогает технологиям и другим
+        вспомогательным инструментам, в react он предоставлен JSX атрибутом
+        htmlFor. <br />
+        Для создания уникальных индификаторов элементов форм используется след
+        подход: для каждого экземпляра компонента во время его инициализации
+        создется набор уникальных индификаторов, хранящихся на экземпляре. Таким
+        образом между формами получаем уникальные id.
+      </p>
+      <p class="bg">
+        // Можно использовать любой пакет для генерации уникальных строк<br />
+        import { nanoid } from nanoid;<br /><br />
+
+        class Form extends Component {<br />
+        loginInputId = nanoid();<br /><br />
+
+        render() {<br />
+        return (<br />
+        &lt;form&gt;<br />
+        &lt;label htmlFor={this.loginInputId}&gt; Login<br />
+        &lt;/label&gt;<br />
+        &lt;input type='text' name='login'
+        id={this.loginInputId}&gt;&lt;/input&gt;<br />
+        &lt;/form&gt;<br />
+        )<br />
+        }<br />
+        }<br />
+      </p>
+      <p>
+        <b>Чекбоксы</b><br />
+        Работа с чекбоксами проста. Чекбокс может быть всего в двух состояниях
+        true or false.
+      </p>
+      <ul>
+        Особенности чекбокса
+        <li>
+          Имя атрибута, которому передается текущее значение из state. Для
+          чекбоксов это checked и передаем туда буль
+        </li>
+        <li>
+          Во время обработки события onChange для получения значения в объекте
+          события обращаемся к свойству e.target.checked
+        </li>
+        <li>
+          Если чекбокс должен сохранять значение его можно повесить на атрибут
+          value и прочесть с объекта события
+        </li>
+      </ul>
+      <p>
+        Добавим в нашу форму чекбокс для подтверждения согласия пользователя и
+        сделаем кнопку сабмита неактивной пока не активен чекбокс
+      </p>
+      <p class="bg">
+        const INITIAL_STATE1 = { login: '', email: '', password: '', agree:
+        false };<br /><br />
+
+        class SignUpForm3 extends Component {<br />
+        state = { ...INITIAL_STATE1 };<br /><br />
+
+        handleChange = e =&gt; {<br />
+        const { name, value, type, checked } = e.target;<br /><br />
+
+        // Если тип элемента чекбокс - берем значение checked, в противном
+        случае value<br />
+        this.setState({[name]: type === 'checkbox' ? checked : value})<br />
+        }<br /><br />
+
+        handleSubmit = e =&gt; {<br />
+        e.preventDefault();<br />
+        const { login, email, password, agree } = this.state;<br />
+        console.log(`Login: ${login}, Email: ${email}, Password: ${password},
+        Agree: ${agree}`);<br />
+        }<br /><br />
+
+        render() {<br />
+        const { login, email, password, agree } = this.state;<br /><br />
+
+        return (<br />
+        &lt;form onSubmit={this.handleSubmit}&gt;<br />
+        &lt;label&gt;<br />
+        Agree<br />
+        &lt;input type='checkbox' checked={agree}
+        onChange={this.handleChange}&gt;&lt;/input&gt;<br />
+        &lt;/label&gt;<br />
+        &lt;button type='submit' disabled={!agree}&gt;&lt;/button&gt;<br />
+        &lt;/form&gt;<br />
+        )<br />
+        }<br />
+        }<br />
+      </p>
+      <p>
+        Радиоточки <br />
+        Добавим группу
+      </p>
+      <p class="bg">
+        // Используем enumerable чтобы не создавать антипаттерн<br />
+        const Gender = { male, female };<br />
+        const INITIAL_STATE3 = { login: '', email: '', password: '', agree:
+        false, gender: null };<br /><br />
+
+        class SignUpForm4 extends Component {<br />
+        state = { ...INITIAL_STATE1 };<br />
+        handleChange = e =&gt; {<br />
+        const { name, value, type, checked, gender } = e.target;<br /><br />
+
+        this.setState({[name]: type === 'checkbox' ? checked : value})<br />
+        }<br /><br />
+
+        handleSubmit = e =&gt; {<br />
+        e.preventDefault();<br />
+        const { login, email, password, agree, gender } = this.state;<br /><br />
+
+        if (!agree) {<br />
+        alert('U must agreed form');<br />
+        }<br />
+        console.log(`Login: ${login}, Email: ${email}, Password: ${password},
+        Agree: ${agree}, Gender: ${gender}`);<br />
+        this.setState({...INITIAL_STATE3})<br />
+        }<br /><br />
+
+        render() {<br />
+        const { login, email, password, agree, gender } = this.state;<br /><br />
+
+        return (<br />
+        &lt;form onSubmit={this.handleSubmit}&gt;<br />
+        &lt;selection&gt;<br />
+        &lt;h2&gt;Choise gender&lt;/h2&gt;<br />
+        &lt;label&gt;Male<br />
+        &lt;input type='radio' checked={gender === Gender.male} name='gender'
+        value={Gender.male} onChange={this.handleChange}/&gt;<br />
+        &lt;/label&gt;<br />
+        &lt;label&gt;Female<br />
+        &lt;input type='radio' checked={gender === Gender.female} name='gender'
+        value={Gender.female} onChange={this.handleChange}/&gt;<br />
+        &lt;/label&gt;<br />
+        &lt;/selection&gt;<br />
+        &lt;button type='submit' disabled={!agree}&gt;Login
+        {login}&lt;/button&gt;<br />
+        &lt;/form&gt;<br />
+        )<br />
+        }<br />
+        }as
+      </p>
+    </section>
+    <script src=""></script>
+  </body>
+</html>
