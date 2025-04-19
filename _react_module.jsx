@@ -1071,7 +1071,7 @@ class SignUpForm2 extends Component {
 // ================================== Генерация id элементов форм ======================
 
 // Можно использовать любой пакет для генерации уникальных строк
-import { nanoid } from nanoid;
+// import { nanoid } from nanoid;
 
 class Form extends Component {
   loginInputId = nanoid();
@@ -1079,11 +1079,10 @@ class Form extends Component {
   render() {
     return (
       <form>
-        <label htmlFor={this.loginInputId}> Login
-        </label>
-          <input type='text' name='login' id={this.loginInputId}></input>
+        <label htmlFor={this.loginInputId}> Login</label>
+        <input type="text" name="login" id={this.loginInputId}></input>
       </form>
-    )
+    );
   }
 }
 
@@ -1098,14 +1097,16 @@ class SignUpForm3 extends Component {
     const { name, value, type, checked } = e.target;
 
     // Если тип элемента чекбокс - берем значение checked, в противном случае value
-    this.setState({[name]: type === 'checkbox' ? checked : value})
-  }
+    this.setState({ [name]: type === 'checkbox' ? checked : value });
+  };
 
   handleSubmit = e => {
     e.preventDefault();
     const { login, email, password, agree } = this.state;
-    console.log(`Login: ${login}, Email: ${email}, Password: ${password}, Agree: ${agree}`);
-  }
+    console.log(
+      `Login: ${login}, Email: ${email}, Password: ${password}, Agree: ${agree}`
+    );
+  };
 
   render() {
     const { login, email, password, agree } = this.state;
@@ -1114,28 +1115,37 @@ class SignUpForm3 extends Component {
       <form onSubmit={this.handleSubmit}>
         <label>
           Agree
-          <input type='checkbox' checked={agree} onChange={this.handleChange}></input>
+          <input
+            type="checkbox"
+            checked={agree}
+            onChange={this.handleChange}
+          ></input>
         </label>
-        <button type='submit' disabled={!agree}></button>
+        <button type="submit" disabled={!agree}></button>
       </form>
-    )
+    );
   }
 }
-
 
 // ============================ Радиоточки ========================
 
 // Используем enumerable чтобы не создавать антипаттерн
 const Gender = { male, female };
-const INITIAL_STATE3 = { login: '', email: '', password: '', agree: false, gender: null };
+const INITIAL_STATE3 = {
+  login: '',
+  email: '',
+  password: '',
+  agree: false,
+  gender: null,
+};
 
 class SignUpForm4 extends Component {
   state = { ...INITIAL_STATE1 };
   handleChange = e => {
     const { name, value, type, checked, gender } = e.target;
 
-    this.setState({[name]: type === 'checkbox' ? checked : value})
-  }
+    this.setState({ [name]: type === 'checkbox' ? checked : value });
+  };
 
   handleSubmit = e => {
     e.preventDefault();
@@ -1144,9 +1154,11 @@ class SignUpForm4 extends Component {
     if (!agree) {
       alert('U must agreed form');
     }
-    console.log(`Login: ${login}, Email: ${email}, Password: ${password}, Agree: ${agree}, Gender: ${gender}`);
-    this.setState({...INITIAL_STATE3})
-  }
+    console.log(
+      `Login: ${login}, Email: ${email}, Password: ${password}, Agree: ${agree}, Gender: ${gender}`
+    );
+    this.setState({ ...INITIAL_STATE3 });
+  };
 
   render() {
     const { login, email, password, agree, gender } = this.state;
@@ -1155,15 +1167,108 @@ class SignUpForm4 extends Component {
       <form onSubmit={this.handleSubmit}>
         <selection>
           <h2>Choise gender</h2>
-          <label>Male
-            <input type='radio' checked={gender === Gender.male} name='gender' value={Gender.male} onChange={this.handleChange}/>
+          <label>
+            Male
+            <input
+              type="radio"
+              checked={gender === Gender.male}
+              name="gender"
+              value={Gender.male}
+              onChange={this.handleChange}
+            />
           </label>
-          <label>Female
-            <input type='radio' checked={gender === Gender.female} name='gender' value={Gender.female} onChange={this.handleChange}/>
+          <label>
+            Female
+            <input
+              type="radio"
+              checked={gender === Gender.female}
+              name="gender"
+              value={Gender.female}
+              onChange={this.handleChange}
+            />
           </label>
         </selection>
-        <button type='submit' disabled={!agree}>Login {login}</button>
+        <button type="submit" disabled={!agree}>
+          Login {login}
+        </button>
       </form>
-    )
+    );
+  }
+}
+
+// ========================================== Select =====================================
+
+const INITIAL_STATE4 = {
+  login: '',
+  email: '',
+  password: '',
+  agree: false,
+  gender: null,
+  age: '',
+};
+
+class SignUpForm6 extends Component {
+  state = { ...INITIAL_STATE4 };
+
+  handleSubmit = e => {
+    e.preventDefault();
+
+    if (!agree) {
+      alert('U must agreed form');
+    }
+
+    this.setState({ ...INITIAL_STATE3 });
+  };
+
+  handleChange = e => {
+    const { name, value, type, checked, gender, age } = e.target;
+
+    // this.setState({[name]: type === 'select' ? select : value})
+  };
+
+  render() {
+    const { login, email, password, agree, gender, age } = this.state;
+    return (
+      <form onSubmit={this.handleSubmit}>
+        <label>
+          {' '}
+          Select age
+          <select name="age" value={age} onChange={this.handleChange}>
+            <option value="" disabled>
+              Disable
+            </option>
+            <option value="18-25">18-25</option>
+            <option value="25-40">25-40</option>
+            <option value="40-50">40-50</option>
+            <option value="50+">50+</option>
+          </select>
+        </label>
+        <button type="submit" disabled={!agree}>
+          Send {login}
+        </button>
+      </form>
+    );
+  }
+}
+
+// ===============================
+
+class ErrorSmth extends Component {
+  state = { hasError: false };
+
+  componentDidCatch(error, info) {
+    // Если метод был вызван - устанавливает состояние
+    this.setState({ hasError: true });
+
+    // Так же можно отправить описание ошибки
+    logErrorToMyServise(error, info);
+  }
+
+  render() {
+    // Если есть ошибка
+    if (this.state.hasError) {
+      return <p>Smth wrong</p>;
+    }
+    return this.props.children;
   }
 }

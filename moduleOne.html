@@ -2203,7 +2203,177 @@
         &lt;/form&gt;<br />
         )<br />
         }<br />
-        }as
+        }
+      </p>
+      <p>
+        <b>Select</b><br />
+        У селекта есть опции - value и onChange.
+      </p>
+      <p class="bg">
+        const INITIAL_STATE4 = { login: '', email: '', password: '', agree:
+        false, gender: null, age: '' }; <br /><br />
+
+        class SignUpForm6 extends Component {<br />
+        state = { ...INITIAL_STATE4 };<br /><br />
+
+        handleSubmit = e =&gt; {<br />
+        e.preventDefault();<br /><br />
+
+        if (!agree) {<br />
+        alert('U must agreed form');<br />
+        }<br /><br />
+
+        this.setState({...INITIAL_STATE3})<br />
+        }<br /><br />
+
+        handleChange = e =&gt; {<br />
+        const { name, value, type, checked, gender,age } = e.target;<br /><br />
+
+        // this.setState({[name]: type === 'select' ? select : value})<br />
+        }<br /><br />
+
+        render() {<br />
+        const { login, email, password, agree, gender, age } = this.state;<br />
+        return (<br />
+        &lt;form onSubmit={this.handleSubmit}&gt;<br />
+        &lt;label&gt; Select age<br />
+        &lt;select name='age' value={age} onChange={this.handleChange}&gt;<br />
+        &lt;option value='' disabled&gt;Disable&lt;/option&gt;<br />
+        &lt;option value='18-25'&gt;18-25&lt;/option&gt;<br />
+        &lt;option value='25-40'&gt;25-40&lt;/option&gt;<br />
+        &lt;option value='40-50'&gt;40-50&lt;/option&gt;<br />
+        &lt;option value='50+'&gt;50+&lt;/option&gt;<br />
+        &lt;/select&gt;<br />
+        &lt;/label&gt;<br />
+        &lt;button type='submit' disabled={!agree}&gt;Send
+        {login}&lt;/button&gt;<br />
+        &lt;/form&gt;<br />
+        )<br />
+        }<br />
+        }
+      </p>
+      <p>
+        <b>Жизненный цикл</b><br />
+        Существует несколько стадий жизненного цикла - монтирование, обновление,
+        размонтирование. Во время каждой из них компонент класса вызываются
+        наследуемые от реакт компонентов. Мы можем переопределить поведение
+        добавив необходимый функционал в рамках установленных правил. Всего есть
+        7 методов жизненного цикла. На практике в большинстве повседневных задач
+        использется 3. componentDidMount, componentDidUpdate,
+        componentDidUnmount. <br />
+        Стадия монтирования. <br />
+        Следующие методы вызываются в таком таком порядке когда вызывается
+        экземпляр компонента и добавляется в DOM
+      </p>
+      <p>
+        <b>constructor(){}</b><br />
+        Вызывается в момент создания экземпляра компонента прежде чем компонент
+        будет размещен в DOM
+      </p>
+      <ul>
+        <li>Инициализирует исходное состояние компонента</li>
+        <li>Привязывает контекст в методах</li>
+        <li>Нельзя вызвать setState()</li>
+        <li>В большинстве случаев указание конструктора лишнее</li>
+      </ul>
+      <p><b>static getDerivedStateFromProps(nextProps, prevState){}</b></p>
+      <ul>
+        <li>На практике этот метод используется очень редко</li>
+        <li>
+          Вызывается перед render(), перед монтажом и всеми вызовами рендер т.е
+          после обновления state или props
+        </li>
+        <li>
+          Можно использовать для того чтобы установить state в зависимости от
+          props каждой схемы
+        </li>
+        <li>
+          Возвращает объект в котором будет обновленное состояние или null если
+          ничего обновлять не нужно
+        </li>
+        <li>Доступа к this нет</li>
+      </ul>
+      <p>
+        render(){} <br />
+        Позволяет декларативно описать интерфейс. Возвращает результат jsx
+        выражений в поддерево virtualDom. Нельзя использовать setState(). <br />
+        <b>componentDidMount(){}</b> <br />
+        Вызывается сразу после монтирования компонента в DOM <br />
+        Делаем HTTP запросы, вешаем кастомные слушатели и выполняем операцию с
+        DOM деревом <br />
+        Вызов setState в этом методе вызовет повторный рендер <br />
+        <b>Стадия обновления</b><br />
+        Обновление может быть вызвано изменением state самого компонента или
+        props. При обновлении необходимо перерендывать компонент что приводит к
+        вызову следующих методов <br />
+        <b>shouldComponentUpdate(nextProps, nextState){}</b><br />
+        Не вызывается при инициализации компонента <br />
+        Вызывается перед рендером уже смонтированого компонента <br />
+        Необходим исключительно для оптимизации процесса render() <br />
+        По умолчанию рендер происходит каждый раз с новым props или state <br />
+        Позволяет сравнить текущее и предидущее состояние state и props, вернув
+        true или false, указывая react необходимо ли обновлять компонент. <br />
+        Если вернет false то не произойдет render и сomponentDidUpdate <br />
+        Нельзя вызвать setState <br />
+        Использовать необходимо очень осторожно (может произойти потеря памяти
+        т.е бесконечное обновление) <br />
+        Возможно следует заменить на React.PureComponent который будет делать
+        поверхносное сравнение props. Но только после измерений
+        производительности <br />
+        <b>getSnapshotBeforeUpdate(prevProps, prevState){}</b> <br />
+        На практике используется очень редко. Вызывается перед тем как все
+        изменения готовы к добавлению в DOM. Можно использовать для получения
+        DOM значений перед обновлением, например текущую позицию скроллом или
+        размер элемента до обновления. То что вернет этот метод будет передано
+        как третий параметр snapShot в componentDidUpdate. <br />
+        <b>componentDidUpdate(prevProps, prevState, snapShot){}</b> <br />
+        Вызывается сразу после обновления компонента DOM <br />
+        Не вызывается при исходном рендере компонентов <br />
+        Можно вызывать setState обязательно обернуть его в условие проверки
+        изменение предидущих или последующих props или state чтобы не возник
+        бесконечный цикл рендера. <br />
+        Можно делать HTTP запросы <br />
+        Если в компоненте есть getSnapshotBeforeUpdate то возвращаемое им
+        значение будет передано 3м аргументом snapShot, в противном случае его
+        значение будет undefind. <br />
+        <b>Стадия размонтирование (unmount)</b><br />
+        В какой-то момент компонент будет удален из дома, при этом вызывается
+        следующий способ <b>componentWillUnmount(){}</b>. Вызывается перед
+        монтажом или удалением элемента из DOM. Хорошо подходит для очистки -
+        слушатели, таймеры, HTTP запросы <br />
+        Вызов setState не имеет смысла - компонент никогда не перерендерится
+        <br />
+        <b>Обработка ошибок render</b><br />
+        React очень любит класть все приложения при любой ошибке. Метод
+        componetDidCatch(){} срабатывает при ошибке в дочернем компоненте и
+        позволяет родительским компонентам отлавливать ошибку в дочернем
+        элементе записав это в декларативной форме. В результате в случае ошибки
+        интерфейс не падает. <br /><br />
+        Используется для контроля ошибок <br />
+        Ловит ошибки только у children, но не в самом отце <br />
+        error - результат toString() объект ошибки <br />
+        info - объект описывающий stack <br />
+      </p>
+      <p class="bg">
+        class ErrorSmth extends Component {<br />
+        state = { hasError: false };<br /><br />
+
+        componentDidCatch(error, info) {<br />
+        // Если метод был вызван - устанавливает состояние<br />
+        this.setState({ hasError: true });<br /><br />
+
+        // Так же можно отправить описание ошибки<br />
+        logErrorToMyServise(error, info);<br />
+        }<br /><br />
+
+        render() {<br />
+        // Если есть ошибка<br />
+        if (this.state.hasError) {<br />
+        return &lt;p&gt;Smth wrong&lt;/p&gt;;<br />
+        }<br />
+        return this.props.children;<br />
+        }<br />
+        }<br />
       </p>
     </section>
     <script src=""></script>
